@@ -1,4 +1,4 @@
-# dashboard_base
+# bs-dashboard-base
 
 A [Nuxt layer](https://nuxt.com/docs/guide/going-further/layers) providing reusable dashboard components and layouts for Kanton Basel-Stadt, built on the official [Digital Design System](https://github.com/kanton-basel-stadt/designsystem).
 
@@ -83,7 +83,7 @@ Or directly from GitHub:
 ```ts
 export default defineNuxtConfig({
   extends: [
-    ['github:StatA-BS/dashboard_base', { install: true }],
+    ['github:StatA-BS/bs-dashboard-base', { install: true }],
   ],
 })
 ```
@@ -95,7 +95,7 @@ This layer is designed to work alongside the [DCC-BS Nuxt Layers](https://github
 ```ts
 export default defineNuxtConfig({
   extends: [
-    ['github:StatA-BS/dashboard_base', { install: true }],
+    ['github:StatA-BS/bs-dashboard-base', { install: true }],
     ['github:DCC-BS/nuxt-layers/auth', { install: true }],
     ['github:DCC-BS/nuxt-layers/health_check', { install: true }],
     ['github:DCC-BS/nuxt-layers/backend_communication', { install: true }],
