@@ -58,17 +58,18 @@ const tableRows = [
           <p>Die Standard-Variante der <strong>Box</strong> zeigt allgemeine Hinweise auf hellem Hintergrund an. Inhalte können über den Slot oder die <code>html</code>-Eigenschaft übergeben werden.</p>
         </div>
       </div>
-      <Box title="Information" variant="info" :hide-when-empty="false">
-        <p>Dies ist ein <strong>Beispiel-Hinweis</strong>. Hier können wichtige Informationen für die Nutzenden angezeigt werden.</p>
+      <Box title="Zahlen und ihre Bedeutung" variant="info" :hide-when-empty="false">
+        <p>Dieses Dashboard untersucht <strong>faszinierende Zahlen</strong> und ihre Bedeutung &ndash; von der Antwort auf die endgültige Frage bis hin zu den Bausteinen der Mathematik.</p>
         <LinkItem
-          href="/info"
-          title="Einbürgerung"
-          description="Informationen zu Pass / Identitätskarte & Einbürgerung & Beglaubigungen."
+          href="/grafiken/42"
+          title="Die Antwort auf alles"
+          description="Warum die Zahl 42 laut Douglas Adams die ultimative Antwort auf die Frage nach dem Leben, dem Universum und dem ganzen Rest ist."
           class="clear-both mt-15 w-full text-balance"
         />
         <LinkItem
-          href="https://www.bs.ch"
-          title="Petition"
+          href="/grafiken/primzahlen"
+          title="Primzahlen"
+          description="Die Bausteine der Mathematik &ndash; warum die 2 als einzige gerade Primzahl eine Sonderstellung einnimmt."
           class="clear-both mt-15 w-full text-balance"
         />
       </Box>
@@ -81,8 +82,21 @@ const tableRows = [
           <p>Die Variante <code>warning</code> hebt Warnungen mit rotem Hintergrund hervor. Über <code>title-addon</code> kann ein Zusatz zum Titel angegeben werden.</p>
         </div>
       </div>
-      <Box title="Geplante Sperrung" title-addon="Beispiel-Sperrung" variant="warning" :hide-when-empty="false">
-        <p>Dies ist eine Beispiel-Warnung. Sie informiert die Nutzenden über eine geplante Einschränkung.</p>
+      <Box title="Koffein-Warnung" title-addon="Über 5 Tassen pro Tag" variant="warning" :hide-when-empty="false">
+        <p>Die Europäische Behörde für Lebensmittelsicherheit (EFSA) empfiehlt maximal 400&nbsp;mg Koffein pro Tag &ndash; etwa 4 bis 5 Tassen Kaffee. Darüber hinaus nehmen Nervosität und Schlafstörungen zu.</p>
+        <LinkItem
+          href="/grafiken/kaffeepausen"
+          title="Kaffeepausen und Produktivität"
+          description="Warum 3 bis 5 Tassen pro Tag nicht nur gut schmecken, sondern auch die Produktivität steigern."
+          class="clear-both mt-15 w-full text-balance"
+        />
+        <LinkItem
+          href="https://efsa.onlinelibrary.wiley.com/doi/epdf/10.2903/j.efsa.2015.4102"
+          title="EFSA Scientific Opinion on caffeine (PDF)"
+          description="Die vollständige Risikobewertung zu Koffein der Europäischen Behörde für Lebensmittelsicherheit."
+          icon="download"
+          class="clear-both mt-15 w-full text-balance"
+        />
       </Box>
     </div>
 
@@ -93,12 +107,19 @@ const tableRows = [
           <p>Die Variante <code>highlight</code> verwendet einen grünen Hintergrund mit weisser Schrift und eignet sich für besonders wichtige Informationen.</p>
         </div>
       </div>
-      <Box title="Wichtige Mitteilung" variant="highlight" :hide-when-empty="false">
-        <p>Dies ist ein hervorgehobener Hinweis auf grünem Hintergrund. Ideal für zentrale Informationen, die sofort ins Auge fallen sollen.</p>
+      <Box title="Wort des Jahres 2025: 67" variant="highlight" :hide-when-empty="false">
+        <p>Dictionary.com ernannte «67» zum Wort des Jahres 2025 &ndash; eine bedeutungslose Zahlenkombination aus einem TikTok-Song, die die Welt eroberte, bevor sich jemand auf eine Bedeutung einigen konnte.</p>
         <LinkItem
-          href="https://raw.githubusercontent.com/opendatabs/data.bs.ch/master/pdfs/OGD-Richtlinie.pdf"
-          title="OGD-Richtlinie"
-          description="Richtlinie für Open Government Data des Kantons Basel-Stadt."
+          href="/grafiken/sechs-sieben"
+          title="Das 6-7 Meme"
+          description="Wie eine bedeutungslose Zahlenkombination zum weltweiten Phänomen wurde."
+          :inverted="true"
+          class="clear-both mt-15 w-full text-balance"
+        />
+        <LinkItem
+          href="/grafiken/motivation"
+          title="Montags-Motivation"
+          description="Warum nur 3 % der Bevölkerung montags gerne aufsteht &ndash; und was die Forschung dazu sagt."
           :inverted="true"
           class="clear-both mt-15 w-full text-balance"
         />
@@ -136,6 +157,11 @@ const tableRows = [
           href="https://www.bs.ch/fd/itbs/designsystem"
           title="Designsystem.BS"
           description="Das Designsystem des Kantons Basel-Stadt für die Entwicklung digitaler Produkte."
+        />
+        <LinkItem
+          href="https://raw.githubusercontent.com/opendatabs/data-bs.ch/master/pdfs/OGD-Richtlinie.pdf"
+          title="OGD-Richtlinie (PDF)"
+          description="Richtlinie für Open Government Data des Kantons Basel-Stadt."
         />
       </div>
     </div>

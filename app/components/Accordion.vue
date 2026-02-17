@@ -67,8 +67,7 @@ function isOpen(index: number): boolean {
         :aria-labelledby="`accordion-toggle-${index}`"
       >
         <div class="p-10 md:p-20">
-          <div class="mb-20">
-            {{ item.content }}
+          <div class="mb-20 ck-content" v-html="item.content">
           </div>
 
           <div v-if="item.links?.length" class="grid gap-5">
