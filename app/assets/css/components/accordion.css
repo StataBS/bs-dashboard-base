@@ -1,0 +1,37 @@
+.accordion-item {
+  @apply rounded-large bg-white;
+  outline: 1px solid rgba(55, 65, 81, 0.2);
+  border-radius: 10px;
+  transition: outline-color 0.25s ease;
+}
+
+.accordion-item:hover {
+  outline-color: rgba(55, 65, 81, 0.6);
+}
+
+.accordion-header {
+  @apply cursor-pointer rounded-large font-bold text-blue-900;
+  @apply hover:text-blue-700;
+  @apply text-base md:text-lg lg:text-xl;
+}
+
+.accordion-trigger {
+  @apply flex w-full items-center justify-between p-10 text-left;
+  @apply focus-visible:outline-2;
+  @apply md:px-20 lg:py-15;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.accordion-caret {
+  @apply shrink-0 transition-transform duration-250;
+  width: 15px;
+  height: 10px;
+}
+
+.accordion-caret--open {
+  transform: scaleY(-1);
+}

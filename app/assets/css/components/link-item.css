@@ -1,0 +1,18 @@
+.link.with-icon {
+  word-break: break-word;
+  text-decoration: none !important;
+}
+
+.box .link.with-icon,
+.accordion-item .link.with-icon {
+  font-size: 1rem;
+}
+
+.link.with-icon.link--download-icon[href]:before,
+.link.with-icon.link--download-icon[href]:after {
+  content: none !important;
+}
+
+.link--download-icon:hover .download-arrow {
+  @apply animate-jump-y;
+}

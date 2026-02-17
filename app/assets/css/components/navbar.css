@@ -1,0 +1,27 @@
+.sticky-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sticky-navbar--hidden {
+  transform: translateY(-100%);
+}
+
+.nav-link {
+  @apply text-blue-900 font-bold;
+  @apply text-lg md:text-xl;
+  @apply h-50 md:h-70 px-15 md:px-20;
+  @apply transition-all ease-in-out duration-250;
+  @apply flex items-center;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  @apply text-blue-500 bg-green-200;
+}
+
+.nav-link.is-active {
+  @apply text-blue-900 bg-green-50;
+}

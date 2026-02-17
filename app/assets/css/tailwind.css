@@ -1,0 +1,32 @@
+/* Design system base: brand-colors, html, fonts, container, page-header,
+   breadcrumbs, pagination, gallery, typography, links, tags, tables,
+   buttons, form elements, search, icons */
+@import '@kanton-basel-stadt/designsystem/assets/css/tailwind.css';
+
+/* Layer-specific component overrides and additions */
+@import './components/page.css';
+@import './components/arrow-icon.css';
+@import './components/box.css';
+@import './components/box-section.css';
+@import './components/opening-times-list.css';
+@import './components/header.css';
+@import './components/footer.css';
+@import './components/carousel.css';
+@import './components/raeppli-raege.css';
+@import './components/ck-content.css';
+@import './components/hero-image.css';
+@import './components/map-image.css';
+@import './components/kpi-card.css';
+@import './components/table-overrides.css';
+@import './components/accordion.css';
+@import './components/feedback-control.css';
+@import './components/link-item.css';
+@import './components/navbar.css';
+@import './components/nav-links.css';
+@import './components/tabs.css';
+
+@layer utilities {
+  .comma-list > li {
+    @apply not-last:after:content-[',_'] not-last:after:whitespace-pre inline-block;
+  }
+}

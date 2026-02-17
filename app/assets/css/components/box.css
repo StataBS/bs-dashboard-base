@@ -1,0 +1,70 @@
+@layer components {
+    .box {
+        @apply relative my-30 rounded-large;
+        @apply p-15 text-gray-900 max-w-[610px] lg:p-20 lg:pr-30;
+        background-color: #F2F7F3; /* green-50 */
+    }
+
+    .box__header {
+        @apply flex flex-wrap items-baseline pr-50;
+    }
+
+    .box__title {
+        @apply text-xl text-primary-600 text-balance mr-[6px];
+    }
+
+    .box__addon {
+        @apply text-base text-gray-900;
+    }
+
+    .box__content {
+        @apply mt-15 hyphens-auto text-base;
+        @apply not-first:mt-20 not-last:mb-20 xl:not-first:mt-25 xl:not-last:mb-25;
+    }
+
+    .box__icon {
+        @apply absolute right-15 top-15 flex size-50 items-center justify-center rounded-full border-2 border-current p-10 text-primary-600;
+    }
+
+    .box__icon svg {
+        @apply size-30 -ml-2;
+    }
+
+    .box--warning {
+        background-color: #FFF1EF; /* red-50 */
+    }
+
+    .box--warning .box__title {
+        color: #B81600; /* red-800 */
+    }
+
+    .box--warning .box__icon {
+        color: #B81600; /* red-800 */
+    }
+
+    .box--highlight {
+        background-color: #32834A; /* green-600 */
+        color: white;
+    }
+
+    .box--highlight .box__title {
+        color: white;
+    }
+
+    .box--highlight .box__addon {
+        color: white;
+    }
+
+    .box--highlight .box__icon {
+        color: white;
+    }
+
+    .box--highlight a:not(.link-item) {
+        color: white;
+        text-decoration: underline;
+    }
+
+    .box--highlight a:not(.link-item):hover {
+        color: rgba(255, 255, 255, 0.8);
+    }
+}

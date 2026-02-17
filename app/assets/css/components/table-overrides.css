@@ -1,0 +1,29 @@
+/* Overrides on top of the DS .table component */
+@layer components {
+  /* Header-only variant: hide body everywhere */
+  .table--header-only tbody {
+    display: none;
+  }
+
+  /* Header-only mobile layout */
+  .table.has-mobile-style.table--header-only {
+    @apply mobile-only:border-t mobile-only:border-b-0 mobile-only:border-body;
+
+    thead {
+      @apply mobile-only:block mobile-only:border-b-0;
+
+      tr,
+      th {
+        @apply mobile-only:block;
+      }
+    }
+
+    caption {
+      @apply mobile-only:block
+      mobile-only:mb-0
+      mobile-only:pb-5
+      mobile-only:text-base
+      mobile-only:text-primary-600;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+/* Mobile: nav dissolves so links become direct flex children of parent */
+.sidebar-nav {
+  display: contents;
+}
+
+/* Desktop: nav is a sticky sidebar column (only when it fits outside the container) */
+@media (min-width: 1580px) {
+  .sidebar-nav {
+    display: flex;
+    @apply flex-col gap-3 shrink-0 w-[220px];
+    position: sticky;
+    align-self: start;
+    z-index: 40;
+    transition: top 0.3s ease-in-out;
+  }
+}
+
+.sidebar-link {
+  @apply text-left text-base font-medium;
+  @apply px-15 py-10 mb-3;
+  @apply text-blue-800;
+  @apply rounded-large;
+  @apply transition-all ease-in-out duration-250;
+  @apply whitespace-nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+
+  @media (min-width: 1580px) {
+    @apply mb-0;
+  }
+}
+
+.sidebar-link:hover {
+  @apply bg-blue-200 text-blue-800;
+}
+
+.sidebar-link--exact {
+  @apply bg-blue-800 text-white font-bold;
+}
+
+.sidebar-link--exact:hover {
+  @apply bg-blue-900 text-white;
+}
+
+/* Mobile: only the selected link is sticky */
+.sidebar-link--active-sticky {
+  position: sticky;
+  z-index: 40;
+  transition: top 0.3s ease-in-out;
+}
+
+/* Desktop: revert — the full nav is sticky instead */
+@media (min-width: 1580px) {
+  .sidebar-link--active-sticky {
+    position: static;
+    z-index: auto;
+  }
+}
