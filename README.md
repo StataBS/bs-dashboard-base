@@ -1,8 +1,16 @@
 # bs-dashboard-base
 
-A [Nuxt layer](https://nuxt.com/docs/guide/going-further/layers) providing reusable dashboard components and layouts for Kanton Basel-Stadt, built on the official [Digital Design System](https://github.com/kanton-basel-stadt/designsystem).
+> **Repository**: [github.com/StatA-BS/bs-dashboard-base](https://github.com/StatA-BS/bs-dashboard-base)
+
+A [Nuxt Layer](https://nuxt.com/docs/guide/going-further/layers) providing reusable dashboard components, layouts, and styling for Kanton Basel-Stadt, built on top of the official [Digital Design System](https://github.com/kanton-basel-stadt/designsystem).
 
 This layer is intended to be used in dashboard projects at the [Statistisches Amt Basel-Stadt](https://www.statistik.bs.ch). It follows the development guidelines of the [Data Competence Center Basel-Stadt (DCC-BS)](https://dcc-bs.github.io/documentation/) and is designed to work alongside the [DCC-BS Nuxt Layers](https://github.com/DCC-BS/nuxt-layers).
+
+## What is a Nuxt Layer?
+
+Nuxt Layers allow you to share and reuse partial Nuxt applications (components, layouts, composables, plugins, configuration) across multiple projects. When you extend a layer, Nuxt automatically scans and integrates its directories into your application. Your project files always take priority over layer files, so you can override any component or layout locally.
+
+For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/guide/going-further/layers) and the [DCC-BS Nuxt Layers guide](https://dcc-bs.github.io/documentation/nuxt-layers/).
 
 ## What This Layer Provides
 
@@ -43,42 +51,16 @@ This layer is intended to be used in dashboard projects at the [Statistisches Am
 
 - **v-calendar** -- Client-side plugin for `VDatePicker` and `VCalendar` components
 
-## Prerequisites
+## Quick Start
+
+### Prerequisites
 
 - [Node.js](https://nodejs.org/) v20 or later
 - A package manager -- [bun](https://bun.sh/) is recommended (following [DCC-BS conventions](https://dcc-bs.github.io/documentation/)), but npm, yarn, and pnpm work as well
 
-## Installation
+### 1. Extend the Layer
 
-Add this layer as a dependency in your dashboard project:
-
-```sh
-# bun (recommended)
-bun add bs-dashboard-base
-
-# npm
-npm install bs-dashboard-base
-
-# yarn
-yarn add bs-dashboard-base
-
-# pnpm
-pnpm add bs-dashboard-base
-```
-
-All required dependencies, including `@kanton-basel-stadt/designsystem`, are bundled with the layer.
-
-## Usage as a Nuxt Layer
-
-Extend this layer in your project's `nuxt.config.ts`:
-
-```ts
-export default defineNuxtConfig({
-  extends: ['bs-dashboard-base'],
-})
-```
-
-Or directly from GitHub:
+Add the layer to your project's `nuxt.config.ts`:
 
 ```ts
 export default defineNuxtConfig({
@@ -87,6 +69,20 @@ export default defineNuxtConfig({
   ],
 })
 ```
+
+The `{ install: true }` flag tells Nuxt to automatically install the layer's dependencies when cloning.
+
+### 2. Use Layer Features
+
+All components, layouts, composables, and plugins are available immediately -- no imports needed. For example:
+
+```vue
+<template>
+  <KPICard title="Gesamtbevölkerung" description="Basel-Stadt" value="210'529" />
+</template>
+```
+
+The `default` layout (with `AppHeader`, `NavBar`, and `SiteFooter`) is applied automatically.
 
 ### Combining with DCC-BS Nuxt Layers
 
@@ -107,16 +103,77 @@ export default defineNuxtConfig({
 
 For details on configuring the DCC-BS layers (environment variables, auth switching, etc.), see the [DCC-BS Nuxt Layers documentation](https://dcc-bs.github.io/documentation/nuxt-layers/).
 
-## Running the Playground
+### Environment Configuration
+
+Set the GitHub token for the feedback control integration as an environment variable:
+
+```sh
+GITHUB_TOKEN=ghp_xxxxxxxxxxxx
+```
+
+Then configure your `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  extends: [
+    ['github:StatA-BS/bs-dashboard-base', { install: true }],
+  ],
+
+  runtimeConfig: {
+    githubToken: process.env.GITHUB_TOKEN || '',
+  },
+
+  'feedback-control.bs.js': {
+    repo: 'Feedback_your-project',
+    owner: 'YourGitHubOrg',
+    project: 'your-project-name',
+  },
+})
+```
+
+You can then access these values in your app with:
+
+```ts
+const config = useRuntimeConfig()
+console.log(config.githubToken)
+console.log(config.feedbackRepo)
+// ...
+```
+
+See the [Nuxt runtimeConfig docs](https://nuxt.com/docs/guide/essentials/runtime-config) for more details.
+
+## Development
+
+### Repository Structure
+
+```
+bs-dashboard-base/
+├── app/
+│   ├── components/       # Vue components (auto-imported)
+│   ├── composables/      # Composables (auto-imported)
+│   ├── layouts/          # Nuxt layouts
+│   ├── plugins/          # Nuxt plugins
+│   └── assets/css/       # Tailwind + component CSS
+├── .playground/          # Development playground app
+├── nuxt.config.ts        # Layer configuration
+├── postcss.config.js     # PostCSS configuration
+└── package.json
+```
+
+### Running the Playground
 
 The `.playground/` directory contains a demo application that showcases all components and serves as a development environment.
 
 ```sh
+# Clone the repository
+git clone https://github.com/StatA-BS/bs-dashboard-base.git
+cd bs-dashboard-base
+
 # Install dependencies
-bun install        # or: npm install
+bun install
 
 # Start the dev server
-bun run dev        # or: npm run dev
+bun run dev
 ```
 
 The playground will be available at `http://localhost:3000` and includes the following pages:
@@ -133,7 +190,7 @@ The playground will be available at `http://localhost:3000` and includes the fol
 | `/grafiken/zahlensysteme` | Example sub-page |
 | `/grafiken/sechs-sieben` | Example sub-page |
 
-### Other scripts
+### Other Scripts
 
 ```sh
 bun run build       # Build the playground for production
@@ -143,9 +200,9 @@ bun run preview     # Preview the production build
 
 ## Design System and Storybook
 
-This layer builds upon the official **Digital Design System by Kanton Basel-Stadt**. The designsystem provides all CSS, Tailwind configuration, and icons via an unplugin -- but intentionally does not provide framework-specific components (see [designsystem README](https://github.com/kanton-basel-stadt/designsystem#purpose-and-idea)). This layer fills that gap by providing **Vue 3 component implementations** of the design system patterns.
+This layer builds upon the official **Digital Design System by Kanton Basel-Stadt**. The design system provides all CSS, Tailwind configuration, and icons via an unplugin -- but intentionally does not provide framework-specific components (see [designsystem README](https://github.com/kanton-basel-stadt/designsystem#purpose-and-idea)). This layer fills that gap by providing **Vue 3 component implementations** of the design system patterns.
 
-When building or modifying components, always refer to the Storybook instance for the correct markup, class names, and design patterns:
+When building or modifying components, refer to the Storybook instance for the correct markup, class names, and design patterns:
 
 - **Storybook**: [kanton-basel-stadt.github.io/storybook](https://kanton-basel-stadt.github.io/storybook)
 - **Design System repository**: [github.com/kanton-basel-stadt/designsystem](https://github.com/kanton-basel-stadt/designsystem)
@@ -157,8 +214,6 @@ The components in this layer follow the Storybook markup as closely as possible,
 Many of the components in this layer are inspired by dashboards originally built with [R Shiny](https://shiny.posit.co/) at the Statistisches Amt Basel-Stadt. A key example is the [Dashboard Haeusliche Gewalt](https://statistik.bs.ch/haeusliche-gewalt/), which visualizes data on domestic violence in the canton.
 
 This Nuxt layer enables the same dashboard patterns to be built as modern, server-rendered web applications while maintaining the established look and feel from the design system.
-
-A documentation on how to build dashboards in R Shiny will follow soon.
 
 ## Related Projects and Links
 

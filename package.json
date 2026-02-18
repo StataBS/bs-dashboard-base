@@ -1,15 +1,19 @@
 {
   "name": "bs-dashboard-base",
   "version": "0.0.1",
+  "description": "Nuxt layer providing reusable dashboard components and layouts for Kanton Basel-Stadt",
   "type": "module",
-  "main": "./nuxt.config.ts",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StatA-BS/bs-dashboard-base.git"
+  },
   "scripts": {
     "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
     "build": "nuxt build .playground",
     "generate": "nuxt generate .playground",
-    "preview": "nuxt preview .playground",
-    "postinstall": "nuxt prepare .playground"
+    "preview": "nuxt preview .playground"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.0",
