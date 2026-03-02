@@ -2,6 +2,25 @@ import { join } from 'path'
 import { fileURLToPath } from 'url'
 
 const currentDir = fileURLToPath(new URL('.', import.meta.url))
+const consumerDir = process.cwd()
+
+const layerContentGlobs = [
+  join(currentDir, './app/**/*.{vue,ts,js,mjs,cjs}'),
+  join(currentDir, './.playground/**/*.{vue,ts,js,mjs,cjs}'),
+]
+
+const consumerContentGlobs = currentDir === consumerDir
+  ? []
+  : [
+      join(consumerDir, './app.vue'),
+      join(consumerDir, './error.vue'),
+      join(consumerDir, './app/**/*.{vue,ts,js,mjs,cjs}'),
+      join(consumerDir, './pages/**/*.{vue,ts,js,mjs,cjs}'),
+      join(consumerDir, './components/**/*.{vue,ts,js,mjs,cjs}'),
+      join(consumerDir, './layouts/**/*.{vue,ts,js,mjs,cjs}'),
+      join(consumerDir, './composables/**/*.{vue,ts,js,mjs,cjs}'),
+      join(consumerDir, './plugins/**/*.{vue,ts,js,mjs,cjs}'),
+    ]
 
 export default defineNuxtConfig({
   $meta: {
@@ -9,20 +28,24 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-01',
+  extends: [
+    ['github:DCC-BS/nuxt-layers/feedback-control', { install: true }],
+  ],
 
   modules: [
-    '@dcc-bs/feedback-control.bs.js',
     ['@kanton-basel-stadt/designsystem/nuxt', {
       iconOptions: {
         compiler: 'vue3',
       },
       tailwindOptions: {
         config: {
-          content: [
-            join(currentDir, './app/**/*.{vue,ts,js}'),
-            join(currentDir, '.playground/**/*.{vue,ts,js}'),
+          content: [...layerContentGlobs, ...consumerContentGlobs],
+          safelist: [
+            'h-0',
+            {
+              pattern: /^(text|bg|border)-primary-(50|100|200|300|400|500|600|700|800|900)$/,
+            },
           ],
-          safelist: ['h-0'],
           theme: {
             extend: {
               screens: { xxxl: '3200px' },

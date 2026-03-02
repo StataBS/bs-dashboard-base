@@ -17,14 +17,14 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 ### Components
 
 | Component | Description |
-|---|---|
+| --- | --- |
 | `Accordion` | Expandable sections with optional links and icons |
 | `AppHeader` | Page header with Basel-Stadt logo |
 | `Box` | Info box with variants (warning, info, highlight) |
 | `BSLogo` | Basel-Stadt logo with Baselstab icon |
 | `Contact` | Contact card with name, phone, and email |
 | `DatePicker` | Date picker with v-calendar, DD.MM.YYYY format, and event indicators |
-| `FeedbackControlLocal` | Feedback form with rating, text, and email submission |
+| `FeedbackControl` | Feedback form provided by the DCC-BS feedback-control layer |
 | `IconDownload` | Animated SVG download icon |
 | `KPICard` | Key performance indicator card with title, description, and value |
 | `LinkItem` | Link with automatic icon detection (internal/external/download) |
@@ -32,6 +32,7 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 | `NavLinks` | Sidebar navigation for sub-sections |
 | `SiteFooter` | Footer with feedback control, links, and copyright |
 | `Table` | Data table with mobile stacking and scoped slots |
+| `TableOfContents` | Reusable table of contents with responsive columns and sticky mode |
 | `Tabs` | Tab component with v-model support |
 
 ### Layout
@@ -45,6 +46,8 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 ### Styling
 
 - Tailwind CSS integration via the `@kanton-basel-stadt/designsystem` unplugin
+- Tailwind content scanning includes both layer files and consuming app files (`app`, `pages`, `components`, `layouts`, `composables`, `plugins`)
+- Guaranteed utility safelist for `text-primary-*`, `bg-primary-*`, and `border-primary-*` shades
 - 20+ component-specific CSS files in `app/assets/css/components/`
 
 ### Plugins
@@ -84,6 +87,64 @@ All components, layouts, composables, and plugins are available immediately -- n
 
 The `default` layout (with `AppHeader`, `NavBar`, and `SiteFooter`) is applied automatically.
 
+### Component Examples
+
+#### `Table` mobile behavior controls
+
+```vue
+<script setup lang="ts">
+const columns = [
+  { key: 'name', label: 'Name' },
+  { key: 'value', label: 'Wert' },
+]
+
+const rows = [
+  { name: 'Basel-Stadt', value: '210529' },
+]
+</script>
+
+<template>
+  <Table
+    :columns="columns"
+    :rows="rows"
+    mobile-stack-style="compact"
+    :mobile-show-head-labels="false"
+    :mobile-cell-separators="false"
+    :mobile-row-separators="false"
+  />
+</template>
+```
+
+`Table` props for mobile configuration:
+
+- `mobile` (`boolean`, default `true`)
+- `mobileShowHeadLabels` (`boolean`, default `true`)
+- `mobileCellSeparators` (`boolean`, default `true`)
+- `mobileRowSeparators` (`boolean`, default `true`)
+- `mobileStackStyle` (`'default' | 'compact' | 'none'`, default `'default'`)
+
+#### `TableOfContents`
+
+```vue
+<script setup lang="ts">
+const tocItems = [
+  { label: 'Einleitung', to: '#einleitung' },
+  { label: 'Methodik', to: '#methodik' },
+  { label: 'Resultate', to: '#resultate' },
+]
+</script>
+
+<template>
+  <TableOfContents
+    :items="tocItems"
+    :columns-by-breakpoint="{ base: 1, md: 2, lg: 3 }"
+    :sticky="true"
+    spacing="compact"
+    color-variant="neutral"
+  />
+</template>
+```
+
 ### Combining with DCC-BS Nuxt Layers
 
 This layer is designed to work alongside the [DCC-BS Nuxt Layers](https://github.com/DCC-BS/nuxt-layers) for authentication, backend communication, health checks, logging, and feedback. A typical dashboard `nuxt.config.ts` might look like this:
@@ -120,13 +181,12 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
-    githubToken: process.env.GITHUB_TOKEN || '',
-  },
-
-  'feedback-control.bs.js': {
-    repo: 'Feedback_your-project',
-    owner: 'YourGitHubOrg',
-    project: 'your-project-name',
+    feedback: {
+      repo: 'Feedback_your-project',
+      repoOwner: 'YourGitHubOrg',
+      project: 'your-project-name',
+      githubToken: process.env.GITHUB_TOKEN || '',
+    },
   },
 })
 ```
@@ -135,8 +195,8 @@ You can then access these values in your app with:
 
 ```ts
 const config = useRuntimeConfig()
-console.log(config.githubToken)
-console.log(config.feedbackRepo)
+console.log(config.feedback.githubToken)
+console.log(config.feedback.repo)
 // ...
 ```
 
@@ -146,7 +206,7 @@ See the [Nuxt runtimeConfig docs](https://nuxt.com/docs/guide/essentials/runtime
 
 ### Repository Structure
 
-```
+```text
 bs-dashboard-base/
 ├── app/
 │   ├── components/       # Vue components (auto-imported)
@@ -179,7 +239,7 @@ bun run dev
 The playground will be available at `http://localhost:3000` and includes the following pages:
 
 | Route | Description |
-|---|---|
+| --- | --- |
 | `/` | Home page with KPI cards and overview |
 | `/info` | Information page |
 | `/grafiken` | Charts section with sidebar navigation |
@@ -218,7 +278,7 @@ This Nuxt layer enables the same dashboard patterns to be built as modern, serve
 ## Related Projects and Links
 
 | Resource | Link |
-|---|---|
+| --- | --- |
 | Design System (unplugin) | [github.com/kanton-basel-stadt/designsystem](https://github.com/kanton-basel-stadt/designsystem) |
 | Storybook | [kanton-basel-stadt.github.io/storybook](https://kanton-basel-stadt.github.io/storybook) |
 | DCC-BS Nuxt Layers | [github.com/DCC-BS/nuxt-layers](https://github.com/DCC-BS/nuxt-layers) |

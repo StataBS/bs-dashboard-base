@@ -21,12 +21,15 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    githubToken: process.env.GITHUB_TOKEN || '',
+    feedback: {
+      repo: 'Feedback_playground_bs-dashboard-base',
+      repoOwner: 'StataBS',
+      project: 'bs-dashboard-base',
+      githubToken: process.env.GITHUB_TOKEN || '',
+    },
   },
 
-  'feedback-control.bs.js': {
-    repo: 'Feedback_playground_bs-dashboard-base',
-    owner: 'StataBS',
-    project: 'bs-dashboard-base',
+  i18n: {
+    defaultLocale: 'de',
   },
 })

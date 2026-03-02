@@ -8,7 +8,7 @@
     <h1 class="sr-only">Fusszeile</h1>
     <div class="footer-container container">
       <div>
-        <FeedbackControlLocal />
+        <FeedbackControl />
       </div>
       <nav aria-label="Kontakt & Datenquellen">
         <ul class="links list-none m-0 p-0 gap-5">

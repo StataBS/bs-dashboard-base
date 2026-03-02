@@ -18,8 +18,8 @@
 @import './components/map-image.css';
 @import './components/kpi-card.css';
 @import './components/table-overrides.css';
+@import './components/table-of-contents.css';
 @import './components/accordion.css';
-@import './components/feedback-control.css';
 @import './components/link-item.css';
 @import './components/navbar.css';
 @import './components/nav-links.css';

@@ -1,0 +1,49 @@
+@layer components {
+  .table-of-contents {
+    @apply w-full;
+  }
+
+  .table-of-contents--sticky {
+    @apply sticky z-40;
+  }
+
+  .table-of-contents--full-bleed {
+    @apply -mx-20 px-20 lg:-mx-30 lg:px-30;
+  }
+
+  .table-of-contents__list {
+    @apply grid gap-10 list-none p-0 m-0;
+  }
+
+  .table-of-contents__item {
+    @apply m-0;
+  }
+
+  .table-of-contents__link {
+    @apply block rounded-large font-medium text-base no-underline transition-all duration-250 ease-in-out;
+  }
+
+  .table-of-contents--default .table-of-contents__link {
+    @apply px-15 py-10;
+  }
+
+  .table-of-contents--compact .table-of-contents__link {
+    @apply px-10 py-8 text-sm;
+  }
+
+  .table-of-contents--primary .table-of-contents__link {
+    @apply text-blue-800 hover:bg-blue-200;
+  }
+
+  .table-of-contents--primary .table-of-contents__link--active {
+    @apply bg-blue-800 text-white hover:bg-blue-900;
+  }
+
+  .table-of-contents--neutral .table-of-contents__link {
+    @apply text-primary-700 hover:bg-primary-100;
+  }
+
+  .table-of-contents--neutral .table-of-contents__link--active {
+    @apply bg-primary-700 text-white hover:bg-primary-800;
+  }
+}
