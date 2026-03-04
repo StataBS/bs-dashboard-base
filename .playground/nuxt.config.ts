@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   app: {
-    baseURL: '/',
+    baseURL: process.env.NUXT_APP_BASE_URL || '/',
     head: {
       htmlAttrs: { lang: 'de' },
       meta: [
@@ -22,10 +22,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     feedback: {
-      repo: 'Feedback_playground_bs-dashboard-base',
+      repo: 'Feedback_dashboard-base',
       repoOwner: 'StataBS',
       project: 'bs-dashboard-base',
-      githubToken: process.env.GITHUB_TOKEN || '',
+      githubToken: process.env.FEEDBACK_GITHUB_TOKEN || '',
     },
   },
 

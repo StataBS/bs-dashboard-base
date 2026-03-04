@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 
 const currentDir = fileURLToPath(new URL('.', import.meta.url))
 const consumerDir = process.cwd()
+const disableFeedbackControlLayer = process.env.DISABLE_FEEDBACK_CONTROL_LAYER === 'true'
 
 const layerContentGlobs = [
   join(currentDir, './app/**/*.{vue,ts,js,mjs,cjs}'),
@@ -28,9 +29,11 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-01-01',
-  extends: [
-    ['github:DCC-BS/nuxt-layers/feedback-control', { install: true }],
-  ],
+  extends: disableFeedbackControlLayer
+    ? []
+    : [
+        ['github:DCC-BS/nuxt-layers/feedback-control', { install: true }],
+      ],
 
   modules: [
     ['@kanton-basel-stadt/designsystem/nuxt', {

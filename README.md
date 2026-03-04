@@ -169,7 +169,7 @@ For details on configuring the DCC-BS layers (environment variables, auth switch
 Set the GitHub token for the feedback control integration as an environment variable:
 
 ```sh
-GITHUB_TOKEN=ghp_xxxxxxxxxxxx
+FEEDBACK_GITHUB_TOKEN=ghp_xxxxxxxxxxxx
 ```
 
 Then configure your `nuxt.config.ts`:
@@ -185,11 +185,13 @@ export default defineNuxtConfig({
       repo: 'Feedback_your-project',
       repoOwner: 'YourGitHubOrg',
       project: 'your-project-name',
-      githubToken: process.env.GITHUB_TOKEN || '',
+      githubToken: process.env.FEEDBACK_GITHUB_TOKEN || '',
     },
   },
 })
 ```
+
+For static GitHub Pages deployments, do not provide `FEEDBACK_GITHUB_TOKEN`. The playground is built as static client assets, and no GitHub token should be shipped to the browser.
 
 You can then access these values in your app with:
 
@@ -257,6 +259,16 @@ bun run build       # Build the playground for production
 bun run generate    # Generate a static site
 bun run preview     # Preview the production build
 ```
+
+### Deploying Playground to GitHub Pages
+
+This repository includes a GitHub Actions workflow at `.github/workflows/deploy-pages.yml` that deploys the generated `.playground` app to GitHub Pages.
+
+1. In your GitHub repository settings, enable **Pages** and set **Source** to **GitHub Actions**.
+2. Push to `main` (or run the workflow manually).
+3. The workflow sets `NUXT_APP_BASE_URL=/<repo>/` automatically, runs static generation, and deploys `.playground/.output/public`.
+
+This static deployment mode does not use `FEEDBACK_GITHUB_TOKEN` and should not expose any GitHub token in client code.
 
 ## Design System and Storybook
 
