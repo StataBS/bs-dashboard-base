@@ -1,22 +1,5 @@
 /* Overrides on top of the DS .table component */
 @layer components {
-  .table.has-mobile-style.table--mobile-no-head-labels tbody td::before {
-    content: none;
-    display: none;
-  }
-
-  .table.has-mobile-style.table--mobile-compact tbody td {
-    @apply mobile-only:py-5 mobile-only:px-10;
-  }
-
-  .table.has-mobile-style.table--mobile-no-cell-separators tbody td {
-    @apply mobile-only:border-t-0 mobile-only:border-b-0;
-  }
-
-  .table.has-mobile-style.table--mobile-no-row-separators tbody tr {
-    @apply mobile-only:border-b-0;
-  }
-
   /* Header-only variant: hide body everywhere */
   .table--header-only tbody {
     display: none;

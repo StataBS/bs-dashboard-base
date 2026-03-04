@@ -130,23 +130,13 @@ const tableRows = [
       <h2 class="h2 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Table</h2>
       <div class="my-20 lg:mb-30 xl:pr-220">
         <div class="ck-content hyphens-auto lg:hyphens-none">
-          <p>Die <strong>Table</strong>-Komponente rendert eine konfigurierbare Tabelle. Definieren Sie die Spalten über <code>columns</code> und die Daten über <code>rows</code>. Für Mobilgeräte können Beschriftungen, Trenner und Stack-Verhalten jetzt über Props gesteuert werden.</p>
+          <p>Die <strong>Table</strong>-Komponente rendert eine konfigurierbare Tabelle. Definieren Sie die Spalten über <code>columns</code> und die Daten über <code>rows</code>.</p>
         </div>
       </div>
       <Table
         :columns="tableColumns"
         :rows="tableRows"
         caption="Übersicht der Box-Varianten"
-      />
-      <Table
-        class="mt-20"
-        :columns="tableColumns"
-        :rows="tableRows"
-        caption="Mobile-Variante ohne Labels und Trenner (compact)"
-        mobile-stack-style="compact"
-        :mobile-show-head-labels="false"
-        :mobile-cell-separators="false"
-        :mobile-row-separators="false"
       />
     </div>
 

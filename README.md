@@ -107,10 +107,6 @@ const rows = [
   <Table
     :columns="columns"
     :rows="rows"
-    mobile-stack-style="compact"
-    :mobile-show-head-labels="false"
-    :mobile-cell-separators="false"
-    :mobile-row-separators="false"
   />
 </template>
 ```
@@ -118,10 +114,6 @@ const rows = [
 `Table` props for mobile configuration:
 
 - `mobile` (`boolean`, default `true`)
-- `mobileShowHeadLabels` (`boolean`, default `true`)
-- `mobileCellSeparators` (`boolean`, default `true`)
-- `mobileRowSeparators` (`boolean`, default `true`)
-- `mobileStackStyle` (`'default' | 'compact' | 'none'`, default `'default'`)
 
 #### `TableOfContents`
 

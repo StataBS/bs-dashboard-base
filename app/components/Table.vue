@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
 type Column = {
   key: string
   label: string
@@ -14,36 +12,20 @@ const props = withDefaults(defineProps<{
   caption?: string
   /** applies the mobile stack style from the .table CSS */
   mobile?: boolean
-  mobileShowHeadLabels?: boolean
-  mobileCellSeparators?: boolean
-  mobileRowSeparators?: boolean
-  mobileStackStyle?: 'default' | 'compact' | 'none'
   tableClass?: string
   getRowKey?: (row: any, index: number) => string | number
 }>(), {
   rows: () => [],
   mobile: true,
-  mobileShowHeadLabels: true,
-  mobileCellSeparators: true,
-  mobileRowSeparators: true,
-  mobileStackStyle: 'default',
   tableClass: '',
 })
-
-const mobileStackEnabled = computed(() => props.mobile && props.mobileStackStyle !== 'none')
 </script>
 
 <template>
   <table
     :class="[
       'table',
-      {
-        'has-mobile-style': mobileStackEnabled,
-        'table--mobile-compact': mobileStackEnabled && mobileStackStyle === 'compact',
-        'table--mobile-no-head-labels': mobileStackEnabled && !mobileShowHeadLabels,
-        'table--mobile-no-cell-separators': mobileStackEnabled && !mobileCellSeparators,
-        'table--mobile-no-row-separators': mobileStackEnabled && !mobileRowSeparators,
-      },
+      { 'has-mobile-style': mobile },
       tableClass,
     ]"
   >
@@ -74,7 +56,7 @@ const mobileStackEnabled = computed(() => props.mobile && props.mobileStackStyle
       <td
           v-for="col in columns"
           :key="col.key"
-          :data-head-label="mobileShowHeadLabels ? col.label : undefined"
+          :data-head-label="col.label"
           :class="[
             'table__col',
             `table__col--${col.key}`,
@@ -97,7 +79,7 @@ const mobileStackEnabled = computed(() => props.mobile && props.mobileStackStyle
       <td
           v-for="col in columns"
           :key="col.key"
-          :data-head-label="mobileShowHeadLabels ? col.label : undefined"
+          :data-head-label="col.label"
           :class="['table__col', `table__col--${col.key}`, col.tdClass]"
       />
     </tr>
