@@ -34,15 +34,8 @@ const ratings = [
 const submitFeedback = async () => {
   errorMessage.value = ''
 
-  // #region agent log
-  fetch('http://127.0.0.1:7653/ingest/15299bb1-4977-4d6a-82ac-d0476f16a457',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'143b03'},body:JSON.stringify({sessionId:'143b03',runId:'feedback-ui',hypothesisId:'H1',location:'app/components/FeedbackControl.vue:submitFeedback',message:'Feedback submission attempted',data:{hasRating:Boolean(selectedRating.value),hasMessage:Boolean(feedbackText.value.trim()),hasEmail:Boolean(emailAddress.value.trim())},timestamp:Date.now()})}).catch(()=>{})
-  // #endregion
-
   if (!feedbackText.value.trim() || !emailAddress.value.trim()) {
     errorMessage.value = 'Bitte fülle Sie Textfeld und Mailadresse aus.'
-    // #region agent log
-    fetch('http://127.0.0.1:7653/ingest/15299bb1-4977-4d6a-82ac-d0476f16a457',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'143b03'},body:JSON.stringify({sessionId:'143b03',runId:'feedback-ui',hypothesisId:'H2',location:'app/components/FeedbackControl.vue:submitFeedback',message:'Validation error before API call',data:{errorMessage:errorMessage.value},timestamp:Date.now()})}).catch(()=>{})
-    // #endregion
     return
   }
 
@@ -72,9 +65,6 @@ const submitFeedback = async () => {
     isSubmitting.value = false
     errorMessage.value
       = 'Feedback konnte nicht gesendet werden. Senden Sie bitte eine Mail an opendata@bs.ch'
-    // #region agent log
-    fetch('http://127.0.0.1:7653/ingest/15299bb1-4977-4d6a-82ac-d0476f16a457',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'143b03'},body:JSON.stringify({sessionId:'143b03',runId:'feedback-ui',hypothesisId:'H3',location:'app/components/FeedbackControl.vue:submitFeedback',message:'API submission failed, fallback error shown',data:{errorMessage:errorMessage.value},timestamp:Date.now()})}).catch(()=>{})
-    // #endregion
     console.error('Failed to submit feedback:', error)
   }
 }
@@ -92,19 +82,23 @@ const resetForm = () => {
 <template>
   <div class="feedback-wrapper">
     <button
-      class="button is-action has-icon !px-10"
+      class="button is-action has-icon !px-10 group/feedback-trigger"
       aria-label="Feedback geben"
       @click="isOpen = !isOpen"
     >
-      <span class="inline-flex items-center justify-center">
-        <component :is="IconMail" data-symbol="mail" class="w-20 h-20" />
+      <span class="inline-flex h-20 w-20 shrink-0 items-center justify-center">
+        <component
+          :is="IconMail"
+          data-symbol="mail"
+          class="w-20 h-20 transition-transform group-hover/feedback-trigger:animate-jump-scale"
+        />
       </span>
       <span>Feedback</span>
     </button>
 
     <div
       v-if="isOpen"
-      class="relative w-[360px] rounded-[12px] bg-white shadow-[0_10px_25px_#BABABA] border-0 p-25 animate-[popup_0.3s_cubic-bezier(0.16,1,0.3,1)] mt-10"
+      class="feedback-panel absolute bottom-[calc(100%+8px)] left-0 z-[60] w-[360px] rounded-[12px] bg-white shadow-[0_10px_25px_#BABABA] border-0 p-25 animate-[popup_0.3s_cubic-bezier(0.16,1,0.3,1)]"
     >
       <button
         class="absolute top-10 right-10 flex h-[28px] w-[28px] items-center justify-center text-lg font-bold cursor-pointer border-0 bg-transparent transition-colors duration-200 hover:text-blue-700"
@@ -124,17 +118,17 @@ const resetForm = () => {
             Wie würden Sie Ihre Erfahrung bewerten?
           </p>
 
-          <div class="tabs-container !my-0">
+          <div class="tabs-container feedback-ratings !my-0">
             <button
               v-for="rating in ratings"
               :key="rating.value"
               type="button"
-              class="button is-tab"
+              class="button is-tab group/feedback-rating"
               :class="{ 'is-active': selectedRating === rating.value }"
               :aria-label="rating.label"
               @click="selectedRating = rating.value"
             >
-              <span class="mr-5 text-base">{{ rating.emoji }}</span>
+              <span class="mr-5 text-base transition-transform group-hover/feedback-rating:animate-jump-scale">{{ rating.emoji }}</span>
               <span class="text-sm">{{ rating.label }}</span>
             </button>
           </div>
@@ -189,12 +183,12 @@ const resetForm = () => {
         </div>
 
         <button
-        class="button is-action has-icon !px-10"
+          class="button is-action has-icon !px-10 max-w-[190px] group/feedback-submit"
           :disabled="isSubmitting"
           @click="submitFeedback"
         >
           <template v-if="isSubmitting">
-            <span class="inline-flex h-20 w-20 items-center justify-center loading-spinner">
+            <span class="inline-flex h-20 w-20 shrink-0 items-center justify-center loading-spinner">
               <component
                 :is="IconBaselstab"
                 data-symbol="baselstab"
@@ -204,11 +198,11 @@ const resetForm = () => {
             <span>Wird gesendet...</span>
           </template>
           <template v-else>
-            <span class="inline-flex items-center justify-center">
+            <span class="inline-flex h-20 w-20 shrink-0 items-center justify-center">
               <component
                 :is="IconSendMail"
                 data-symbol="send-mail"
-                class="w-20 h-20"
+                  class="w-20 h-20 transition-transform group-hover/feedback-submit:animate-jump-x"
               />
             </span>
             <span>Feedback senden</span>
@@ -236,6 +230,25 @@ const resetForm = () => {
 </template>
 
 <style>
+.feedback-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.feedback-ratings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .feedback-panel {
+    right: auto;
+    left: 0;
+    width: min(360px, calc(100vw - 40px));
+  }
+}
+
 @keyframes shake {
   0%,
   100% {
@@ -260,6 +273,7 @@ const resetForm = () => {
     transform: scale(1) translateY(0);
   }
 }
+
 
 .loading-spinner * {
   transform-origin: center;
