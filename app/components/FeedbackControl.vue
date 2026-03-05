@@ -42,7 +42,12 @@ const submitFeedback = async () => {
   isSubmitting.value = true
 
   try {
-    await $fetch('/api/feedback', {
+    const result = await $fetch<{
+      ok: boolean
+      simulated?: boolean
+      issueUrl?: string | null
+      message?: string
+    }>('/api/feedback', {
       method: 'POST',
       body: {
         rating: selectedRating.value,
@@ -51,6 +56,10 @@ const submitFeedback = async () => {
         attachments: [],
       },
     })
+
+    if (result.simulated || !result.issueUrl) {
+      throw new Error(result.message || 'Feedback submission is running in local simulation mode.')
+    }
 
     isSubmitting.value = false
     isSubmitted.value = true

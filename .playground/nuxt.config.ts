@@ -25,7 +25,8 @@ export default defineNuxtConfig({
       repo: 'Feedback_dashboard-base',
       repoOwner: 'StataBS',
       project: 'bs-dashboard-base',
-      githubToken: process.env.FEEDBACK_GITHUB_TOKEN || '',
+      label: 'feedback',
+      githubToken: process.env.FEEDBACK_GITHUB_TOKEN || process.env.GITHUB_TOKEN || '',
     },
   },
 

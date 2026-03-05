@@ -5,6 +5,13 @@ interface FeedbackBody {
   attachments?: unknown[]
 }
 
+interface FeedbackResponse {
+  ok: boolean
+  simulated?: boolean
+  issueUrl?: string | null
+  message?: string
+}
+
 export default defineEventHandler(async (event) => {
   const body = await readBody<FeedbackBody>(event)
 
@@ -25,12 +32,14 @@ export default defineEventHandler(async (event) => {
     repo?: string
     project?: string
     githubToken?: string
+    label?: string
   }
 
   const repoOwner = feedbackConfig.repoOwner || ''
   const repo = feedbackConfig.repo || ''
   const githubToken = feedbackConfig.githubToken || ''
   const project = feedbackConfig.project || ''
+  const issueLabel = feedbackConfig.label || 'feedback'
 
   const createdAt = new Date().toISOString()
   const title = `Feedback (${rating}) - ${email}`
@@ -51,7 +60,12 @@ export default defineEventHandler(async (event) => {
         title,
         issueBody,
       })
-      return { ok: true, simulated: true }
+      return {
+        ok: true,
+        simulated: true,
+        issueUrl: null,
+        message: 'Feedback was simulated locally because GitHub feedback config is incomplete.',
+      } satisfies FeedbackResponse
     }
 
     throw createError({
@@ -60,19 +74,34 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repo}/issues`, {
+  const headers = {
+    Accept: 'application/vnd.github+json',
+    Authorization: `Bearer ${githubToken}`,
+    'Content-Type': 'application/json',
+    'User-Agent': 'bs-dashboard-base-feedback',
+  }
+
+  let response = await fetch(`https://api.github.com/repos/${repoOwner}/${repo}/issues`, {
     method: 'POST',
-    headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${githubToken}`,
-      'Content-Type': 'application/json',
-      'User-Agent': 'bs-dashboard-base-feedback',
-    },
+    headers,
     body: JSON.stringify({
       title,
       body: issueBody,
+      labels: [issueLabel],
     }),
   })
+
+  // Fallback: if label is missing in repo, create issue without labels
+  if (!response.ok && response.status === 422) {
+    response = await fetch(`https://api.github.com/repos/${repoOwner}/${repo}/issues`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        title,
+        body: issueBody,
+      }),
+    })
+  }
 
   if (!response.ok) {
     const responseText = await response.text()
@@ -86,5 +115,5 @@ export default defineEventHandler(async (event) => {
   return {
     ok: true,
     issueUrl: issue.html_url || null,
-  }
+  } satisfies FeedbackResponse
 })
