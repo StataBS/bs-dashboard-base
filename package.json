@@ -32,5 +32,8 @@
     "v-calendar": "^3.1.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.1"
+  },
+  "overrides": {
+    "vite": "7.2.2"
   }
 }
