@@ -46,7 +46,10 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 ### Styling
 
 - Tailwind CSS integration via the `@kanton-basel-stadt/designsystem` unplugin
-- Tailwind content scanning includes both layer files and consuming app files (`app`, `pages`, `components`, `layouts`, `composables`, `plugins`)
+- Layer convention uses `app/composables` and `app/plugins`
+- Tailwind content scanning supports both consuming app conventions:
+  - `app/*` style (`app/composables`, `app/plugins`, etc.)
+  - legacy root style (`composables`, `plugins`, `pages`, `components`, `layouts`)
 - Guaranteed utility safelist for `text-primary-*`, `bg-primary-*`, and `border-primary-*` shades
 - 20+ component-specific CSS files in `app/assets/css/components/`
 

@@ -15,6 +15,8 @@ const consumerContentGlobs = currentDir === consumerDir
       join(consumerDir, './app.vue'),
       join(consumerDir, './error.vue'),
       join(consumerDir, './app/**/*.{vue,ts,js,mjs,cjs}'),
+      join(consumerDir, './app/composables/**/*.{vue,ts,js,mjs,cjs}'),
+      join(consumerDir, './app/plugins/**/*.{vue,ts,js,mjs,cjs}'),
       join(consumerDir, './pages/**/*.{vue,ts,js,mjs,cjs}'),
       join(consumerDir, './components/**/*.{vue,ts,js,mjs,cjs}'),
       join(consumerDir, './layouts/**/*.{vue,ts,js,mjs,cjs}'),
