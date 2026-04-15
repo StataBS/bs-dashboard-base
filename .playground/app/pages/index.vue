@@ -35,7 +35,7 @@ const tableRows = [
     </div>
 
     <div>
-      <h2 class="h2 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">KPICard</h2>
+      <h3 class="h3 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">KPICard</h3>
       <div class="my-20 lg:mb-30 xl:pr-220">
         <div class="ck-content hyphens-auto lg:hyphens-none">
           <p>Die <strong>KPICard</strong>-Komponente zeigt eine Kennzahl mit Titel und optionaler Beschreibung an. Mit dem Parameter <code>href</code> wird die Karte klickbar und erhält beim Hover einen violetten Schatten.</p>
@@ -52,7 +52,7 @@ const tableRows = [
     </div>
 
     <div>
-      <h2 class="h2 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Box &ndash; Info</h2>
+      <h3 class="h3 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Box &ndash; Info</h3>
       <div class="my-20 lg:mb-30 xl:pr-220">
         <div class="ck-content hyphens-auto lg:hyphens-none">
           <p>Die Standard-Variante der <strong>Box</strong> zeigt allgemeine Hinweise auf hellem Hintergrund an. Inhalte können über den Slot oder die <code>html</code>-Eigenschaft übergeben werden.</p>
@@ -76,7 +76,7 @@ const tableRows = [
     </div>
 
     <div>
-      <h2 class="h2 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Box &ndash; Warnung</h2>
+      <h3 class="h3 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Box &ndash; Warnung</h3>
       <div class="my-20 lg:mb-30 xl:pr-220">
         <div class="ck-content hyphens-auto lg:hyphens-none">
           <p>Die Variante <code>warning</code> hebt Warnungen mit rotem Hintergrund hervor. Über <code>title-addon</code> kann ein Zusatz zum Titel angegeben werden.</p>
@@ -101,7 +101,7 @@ const tableRows = [
     </div>
 
     <div>
-      <h2 class="h2 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Box &ndash; Highlight</h2>
+      <h3 class="h3 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Box &ndash; Highlight</h3>
       <div class="my-20 lg:mb-30 xl:pr-220">
         <div class="ck-content hyphens-auto lg:hyphens-none">
           <p>Die Variante <code>highlight</code> verwendet einen grünen Hintergrund mit weisser Schrift und eignet sich für besonders wichtige Informationen.</p>
@@ -127,7 +127,7 @@ const tableRows = [
     </div>
 
     <div>
-      <h2 class="h2 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Table</h2>
+      <h3 class="h3 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Table</h3>
       <div class="my-20 lg:mb-30 xl:pr-220">
         <div class="ck-content hyphens-auto lg:hyphens-none">
           <p>Die <strong>Table</strong>-Komponente rendert eine konfigurierbare Tabelle. Definieren Sie die Spalten über <code>columns</code> und die Daten über <code>rows</code>.</p>
@@ -141,7 +141,7 @@ const tableRows = [
     </div>
 
     <div>
-      <h2 class="h2 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Weiterführende Informationen</h2>
+      <h3 class="h3 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Weiterführende Informationen</h3>
       <div class="my-20 lg:mb-30 xl:pr-220">
         <div class="ck-content hyphens-auto lg:hyphens-none">
           <p>Hier finden Sie weitere nützliche Ressourcen und Hintergrundinformationen.</p>
