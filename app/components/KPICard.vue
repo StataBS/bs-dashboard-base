@@ -26,8 +26,10 @@ const linkAttrs = computed(() => {
     v-bind="linkAttrs"
     :class="['kpi-card', { 'kpi-card--clickable': href || to }]"
   >
-    <strong class="text-base font-bold">{{ title }}</strong>
-    <p v-if="description" class="text-xs mt-5">{{ description }}</p>
-    <p class="text-4xl font-bold text-green-500 mt-10">{{ value }}</p>
+    <div class="kpi-card__intro">
+      <strong class="text-base font-bold">{{ title }}</strong>
+      <p v-if="description" class="text-xs mt-5">{{ description }}</p>
+    </div>
+    <p class="kpi-card__value">{{ value }}</p>
   </component>
 </template>
