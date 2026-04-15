@@ -1,9 +1,80 @@
-/* Mobile: nav dissolves so links become direct flex children of parent */
-.sidebar-nav {
-  display: contents;
+/* ─── Narrow: DDS-aligned dropdown (see form-elements/dropdown.css) ───────── */
+.nav-links-dropdown-root {
+  display: none;
+  position: sticky;
+  z-index: 45;
+  transition: top 0.3s ease-in-out;
 }
 
-/* Desktop: nav is a sticky sidebar column (only when it fits outside the container) */
+@media (max-width: 1579px) {
+  .nav-links-dropdown-root {
+    display: block;
+    width: 100%;
+  }
+}
+
+.nav-links-dropdown {
+  @apply relative w-full min-w-0;
+}
+
+.nav-links-dropdown__trigger {
+  /* Mirrors .dropdown .dropdown-trigger + .dropdown-inner surface (DDS) */
+  @apply flex w-full flex-row items-center justify-between gap-10 border border-blue-900 bg-white rounded;
+  @apply p-10 text-left text-base text-gray-900 transition-all ease-in-out duration-250;
+  @apply h-[46px];
+  @apply hover:border-blue-500;
+  @apply focus:outline-none focus:shadow-purple-600 focus:border-purple-600;
+  cursor: pointer;
+  font: inherit;
+}
+
+.nav-links-dropdown__caret {
+  @apply shrink-0 transition-transform duration-250 ease-in-out;
+  width: 15px;
+  height: 10px;
+}
+
+.nav-links-dropdown__caret--open {
+  transform: scaleY(-1);
+}
+
+.nav-links-dropdown[data-expanded='true'] .nav-links-dropdown__trigger {
+  @apply z-10 border-purple-600 shadow-purple-600;
+}
+
+.nav-links-dropdown__panel {
+  @apply absolute left-0 right-0 top-full z-50 mt-10 max-h-[min(60vh,28rem)] overflow-y-auto;
+  @apply border border-blue-900 bg-white rounded shadow-lg;
+  @apply py-5;
+}
+
+.nav-links-dropdown__item {
+  @apply p-0;
+}
+
+/* Aligns with .dropdown-list-item / .dropdown-option in DDS dropdown.css */
+.nav-links-dropdown__link {
+  @apply flex w-full flex-row items-center relative gap-10 no-underline;
+  @apply px-10 py-10 text-blue-700 transition-colors duration-250;
+}
+
+.nav-links-dropdown__link:hover {
+  @apply text-blue-900 bg-blue-50;
+}
+
+.nav-links-dropdown__link--current {
+  @apply bg-blue-800 text-white font-bold;
+}
+
+.nav-links-dropdown__link--current:hover {
+  @apply bg-blue-900 text-white;
+}
+
+/* ─── Wide: sticky sidebar column ─────────────────────────────────────────── */
+.sidebar-nav {
+  display: none;
+}
+
 @media (min-width: 1580px) {
   .sidebar-nav {
     display: flex;
@@ -18,7 +89,7 @@
 .sidebar-link {
   @apply text-left text-base font-medium;
   @apply px-15 py-10 mb-3;
-  @apply text-blue-800;
+  @apply text-blue-700;
   @apply rounded-large;
   @apply transition-all ease-in-out duration-250;
   @apply whitespace-nowrap;
@@ -32,7 +103,7 @@
 }
 
 .sidebar-link:hover {
-  @apply bg-blue-200 text-blue-800;
+  @apply bg-blue-50 text-blue-900;
 }
 
 .sidebar-link--exact {
@@ -43,14 +114,7 @@
   @apply bg-blue-900 text-white;
 }
 
-/* Mobile: only the selected link is sticky */
-.sidebar-link--active-sticky {
-  position: sticky;
-  z-index: 40;
-  transition: top 0.3s ease-in-out;
-}
-
-/* Desktop: revert — the full nav is sticky instead */
+/* Wide: full nav is sticky — no per-link sticky */
 @media (min-width: 1580px) {
   .sidebar-link--active-sticky {
     position: static;
