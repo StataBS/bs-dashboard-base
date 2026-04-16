@@ -23,6 +23,7 @@ const stickyTopStyle = computed(() => {
     return `${navBarHeight.value + 15}px`
   return '0px'
 })
+const isPinnedToTop = computed(() => !isNavBarVisible.value)
 
 const dropdownOpen = ref(false)
 const dropdownRoot = ref<HTMLElement | null>(null)
@@ -68,7 +69,7 @@ onUnmounted(() => {
   <!-- Narrow: DDS-style dropdown (form-elements/dropdown), sticky below main nav -->
   <div
     ref="dropdownRoot"
-    class="nav-links-dropdown-root"
+    :class="['nav-links-dropdown-root', { 'nav-links-dropdown-root--at-top': isPinnedToTop }]"
     :style="{ top: stickyTopStyle }"
   >
     <div
