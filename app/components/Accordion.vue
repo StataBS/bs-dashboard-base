@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import IconSymbolCaret from '@kanton-basel-stadt/designsystem/icons/symbol/caret'
+
 export interface AccordionLink {
   title: string
   description?: string
@@ -10,15 +11,31 @@ export interface AccordionLink {
 
 export interface AccordionItem {
   title: string
-  content: string
+  content?: string
   links?: AccordionLink[]
+  [key: string]: unknown
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   items: AccordionItem[]
-}>()
+  openAll?: boolean
+  idPrefix?: string
+}>(), {
+  openAll: false,
+  idPrefix: 'accordion',
+})
 
 const openItems = ref<Set<number>>(new Set())
+
+watch(
+  () => [props.openAll, props.items.length] as const,
+  ([openAll]) => {
+    openItems.value = openAll
+      ? new Set(props.items.map((_, index) => index))
+      : new Set()
+  },
+  { immediate: true },
+)
 
 function toggle(index: number) {
   const newSet = new Set(openItems.value)
@@ -47,7 +64,7 @@ function isOpen(index: number): boolean {
           type="button"
           class="accordion-trigger"
           :aria-expanded="isOpen(index)"
-          :aria-controls="`accordion-content-${index}`"
+          :aria-controls="`${idPrefix}-content-${index}`"
           @click="toggle(index)"
         >
           <span>{{ item.title }}</span>
@@ -62,24 +79,35 @@ function isOpen(index: number): boolean {
 
       <div
         v-show="isOpen(index)"
-        :id="`accordion-content-${index}`"
+        :id="`${idPrefix}-content-${index}`"
         role="region"
-        :aria-labelledby="`accordion-toggle-${index}`"
       >
         <div class="p-10 md:p-20">
-          <div class="mb-20 ck-content" v-html="item.content">
-          </div>
-
-          <div v-if="item.links?.length" class="grid gap-5">
-            <LinkItem
-              v-for="(link, linkIndex) in item.links"
-              :key="linkIndex"
-              :href="link.href"
-              :title="link.title"
-              :description="link.description"
-              :icon="link.icon ?? 'auto'"
+          <slot
+            name="item"
+            :item="item"
+            :index="index"
+          >
+            <div
+              v-if="item.content"
+              class="mb-20 ck-content"
+              v-html="item.content"
             />
-          </div>
+
+            <div
+              v-if="item.links?.length"
+              class="grid gap-5"
+            >
+              <LinkItem
+                v-for="(link, linkIndex) in item.links"
+                :key="linkIndex"
+                :href="link.href"
+                :title="link.title"
+                :description="link.description"
+                :icon="link.icon ?? 'auto'"
+              />
+            </div>
+          </slot>
         </div>
       </div>
     </div>

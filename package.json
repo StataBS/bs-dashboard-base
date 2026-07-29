@@ -1,6 +1,6 @@
 {
   "name": "bs-dashboard-base",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Nuxt layer providing reusable dashboard components and layouts for Kanton Basel-Stadt",
   "type": "module",
   "license": "GPL-3.0",
@@ -15,22 +15,25 @@
     "generate": "nuxt generate .playground",
     "preview": "nuxt preview .playground"
   },
+  "peerDependencies": {
+    "nuxt": "^4.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
+  },
+  "dependencies": {
+    "@kanton-basel-stadt/designsystem": "^1.2.1",
+    "@popperjs/core": "^2.11.8",
+    "tailwindcss": "^3.4.1",
+    "v-calendar": "^3.1.2"
+  },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.0",
     "@types/node": "^25.2.3",
+    "nuxt": "^4.0.0",
     "postcss": "^8.4.29",
     "postcss-mixins": "^9.0.4",
     "postcss-nesting": "^12.0.1",
-    "vite": "^7.2.2"
-  },
-  "dependencies": {
-    "@kanton-basel-stadt/designsystem": "^1.1.4",
-    "@nuxt/schema": "^4.0.0",
-    "@popperjs/core": "^2.11.8",
-    "@vue/compiler-sfc": "^3.5.22",
-    "nuxt": "^4.0.0",
-    "tailwindcss": "^3.4.1",
-    "v-calendar": "^3.1.2",
+    "vite": "^7.2.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.1"
   },

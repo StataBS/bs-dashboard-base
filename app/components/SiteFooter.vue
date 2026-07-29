@@ -1,5 +1,25 @@
-<!-- components/SiteFooter.vue -->
 <script setup lang="ts">
+import { withBase } from 'ufo'
+
+const DEFAULT_META_LINKS = [
+  { href: 'https://www.bs.ch/', label: 'Startseite' },
+  { href: 'https://www.bs.ch/datenschutzerklaerung', label: 'Datenschutz' },
+  { href: 'https://www.bs.ch/impressum', label: 'Impressum' },
+  { href: 'https://www.bs.ch/erklaerung-zur-barrierefreiheit', label: 'Barrierefreiheit' },
+  { href: 'https://www.bs.ch/ombudsstelle', label: 'Ombudsstelle' },
+]
+
+const { dashboard } = useAppConfig()
+const githubIconSrc = withBase('/icons/github-mark.svg', useRuntimeConfig().app.baseURL)
+
+const contactLinks = computed(() => dashboard?.footer?.contactLinks ?? [])
+const metaLinks = computed(() => {
+  const configured = dashboard?.footer?.metaLinks
+  return configured?.length ? configured : DEFAULT_META_LINKS
+})
+const copyrightYear = computed(
+  () => dashboard?.footer?.copyrightYear ?? new Date().getFullYear(),
+)
 </script>
 
 <template>
@@ -10,58 +30,26 @@
       <div>
         <FeedbackControl />
       </div>
-      <nav aria-label="Kontakt & Datenquellen">
+      <nav
+        v-if="contactLinks.length"
+        aria-label="Kontakt & Datenquellen"
+      >
         <ul class="links list-none m-0 p-0 gap-5">
-          <li>
+          <li
+            v-for="link in contactLinks"
+            :key="`${link.href}-${link.label}`"
+          >
             <a
-              class="button is-sm is-link"
-              href="https://www.bs.ch"
+              class="button is-sm"
+              :class="link.showGithubIcon ? 'group' : 'is-link'"
+              :href="link.href"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Link zur auftragsbearbeitenden Stelle
-            </a>
-          </li>
-          <li>
-            <a
-              class="button is-sm is-link"
-              href="https://statistik.bs.ch"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Statistisches Amt
-            </a>
-          </li>
-          <li>
-            <a
-              class="button is-sm is-link"
-              href="https://www.bs.ch/daten/databs/dcc"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              DCC Data Competence Center
-            </a>
-          </li>
-          <li>
-            <a
-              class="button is-sm is-link"
-              href="https://data.bs.ch/explore"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link zur Datenquelle
-            </a>
-          </li>
-          <li>
-            <a
-              class="button is-sm group"
-              href="https://github.com/statabs"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Code auf Github
+              {{ link.label }}
               <img
-                src="/icons/github-mark.svg"
+                v-if="link.showGithubIcon"
+                :src="githubIconSrc"
                 alt=""
                 aria-hidden="true"
                 style="width: 16px; height: 16px;"
@@ -71,27 +59,25 @@
           </li>
         </ul>
       </nav>
-      <nav aria-label="Metadatenmenü">
+      <nav
+        v-if="metaLinks.length"
+        aria-label="Metadatenmenü"
+      >
         <ul class="links links--spaced">
-          <li>
-            <a class="link link--tall" href="https://www.bs.ch/" target="_blank">Startseite</a>
-          </li>
-          <li>
-            <a class="link link--tall" href="https://www.bs.ch/datenschutzerklaerung" target="_blank">Datenschutz</a>
-          </li>
-          <li>
-            <a class="link link--tall" href="https://www.bs.ch/impressum" target="_blank">Impressum</a>
-          </li>
-          <li>
-            <a class="link link--tall" href="https://www.bs.ch/erklaerung-zur-barrierefreiheit" target="_blank">Barrierefreiheit</a>
-          </li>
-          <li>
-            <a class="link link--tall" href="https://www.bs.ch/ombudsstelle" target="_blank">Ombudsstelle</a>
+          <li
+            v-for="link in metaLinks"
+            :key="`${link.href}-${link.label}`"
+          >
+            <a
+              class="link link--tall"
+              :href="link.href"
+              target="_blank"
+            >{{ link.label }}</a>
           </li>
         </ul>
       </nav>
       <div class="footer-copyright">
-        &copy; 2026 Basel-Stadt
+        &copy; {{ copyrightYear }} Basel-Stadt
       </div>
     </div>
   </footer>

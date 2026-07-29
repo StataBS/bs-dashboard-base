@@ -18,30 +18,64 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 
 | Component | Description |
 | --- | --- |
-| `Accordion` | Expandable sections with optional links and icons |
-| `AppHeader` | Page header with Basel-Stadt logo |
+| `Accordion` | Expandable sections; HTML `content` or `#item` slot; optional `openAll` |
+| `AppHeader` | Page header with Basel-Stadt logo (configured via `app.config`) |
 | `Box` | Info box with variants (warning, info, highlight) |
 | `BSLogo` | Basel-Stadt logo with Baselstab icon |
 | `Contact` | Contact card with name, phone, and email |
 | `DatePicker` | Date picker with v-calendar, DD.MM.YYYY format, and event indicators |
-| `FeedbackControl` | Feedback form provided by the DCC-BS feedback-control layer |
+| `FeedbackControl` | Feedback form that posts to `/api/feedback` (GitHub Issues) |
 | `IconDownload` | Animated SVG download icon |
 | `KPICard` | Key performance indicator card with title, description, and value |
 | `LinkItem` | Link with automatic icon detection (internal/external/download) |
-| `NavBar` | Sticky navigation bar with scroll-based show/hide |
-| `NavLinks` | Sidebar navigation for sub-sections |
+| `NavBar` | Sticky navigation bar; items from `app.config` |
+| `NavLinks` | Sidebar / dropdown for sub-sections; sections from `app.config` |
 | `SiteFooter` | Footer with feedback control, links, and copyright |
-| `Table` | Data table with mobile stacking and scoped slots |
+| `Table` | Data table with mobile stacking, scoped slots, optional sort/filter |
 | `TableOfContents` | Reusable table of contents with responsive columns and sticky mode |
 | `Tabs` | Tab component with v-model support |
 
 ### Layout
 
-- **`default`** -- Default layout with `AppHeader`, `NavBar`, main content slot, and `SiteFooter`.
+- **`default`** -- Default layout with `AppHeader`, optional `NavBar` (`dashboard.showNavBar`), main content slot, and `SiteFooter`.
 
-### Composables
+### Composables / server utils
 
-- **`useBsApi`** -- Composable for fetching datasets from the [Basel-Stadt Open Data API](https://data.bs.ch).
+- **`useBsApi`** -- Client/SSR composable: tries `/data/{odsId}.json`, then live ODS with Apikey.
+- **`fetchDatasetJson` / `resolveBsApiKey`** -- Nitro server utils for ODS JSON export (`server/utils/bsDataPortal.ts`).
+
+### Chrome configuration (`app.config`)
+
+Configure dashboard chrome in your app’s `app/app.config.ts` (deep-merged with layer defaults):
+
+```ts
+export default defineAppConfig({
+  dashboard: {
+    showNavBar: true,
+    logoHref: 'https://www.bs.ch',
+    aboutLink: 'https://www.bs.ch/pd/statistik',
+    aboutLabel: 'Über uns',
+    navItems: [
+      { to: '/', label: 'Start', exact: true },
+      { to: '/info', label: 'Info' },
+    ],
+    navLinksSections: [
+      { to: '/grafiken/a', label: 'Abschnitt A' },
+    ],
+    footer: {
+      contactLinks: [
+        { href: 'https://statistik.bs.ch', label: 'Statistisches Amt' },
+        { href: 'https://github.com/org/repo', label: 'Code auf Github', showGithubIcon: true },
+      ],
+      metaLinks: [
+        { href: 'https://www.bs.ch/', label: 'Startseite' },
+        { href: 'https://www.bs.ch/datenschutzerklaerung', label: 'Datenschutz' },
+      ],
+      copyrightYear: new Date().getFullYear(),
+    },
+  },
+})
+```
 
 ### Styling
 
@@ -64,20 +98,41 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 - [Node.js](https://nodejs.org/) v20 or later
 - A package manager -- [bun](https://bun.sh/) is recommended (following [DCC-BS conventions](https://dcc-bs.github.io/documentation/)), but npm, yarn, and pnpm work as well
 
-### 1. Extend the Layer
+### 1. Add the dependency and extend the layer
 
-Add the layer to your project's `nuxt.config.ts`:
+Pin a release tag in `package.json` (recommended):
+
+```json
+{
+  "dependencies": {
+    "bs-dashboard-base": "github:StataBS/bs-dashboard-base#v0.1.0"
+  }
+}
+```
+
+For local workspace development against a sibling clone:
+
+```json
+"bs-dashboard-base": "file:../dashboard_base"
+```
+
+Then extend the installed package in `nuxt.config.ts`:
 
 ```ts
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 export default defineNuxtConfig({
-  extends: [
-    ['github:StatA-BS/bs-dashboard-base', { install: true }],
-  ],
+  // Released package:
+  extends: [join(__dirname, 'node_modules/bs-dashboard-base')],
+  // Local sibling clone during development:
+  // extends: [join(__dirname, '../dashboard_base')],
 })
 ```
 
-The `{ install: true }` flag tells Nuxt to automatically install the layer's dependencies when cloning.
-
+Put project chrome overrides in **`app/app.config.ts`** (Nuxt 4 `app/` directory), not at the repo root.
 ### 2. Use Layer Features
 
 All components, layouts, composables, and plugins are available immediately -- no imports needed. For example:
@@ -145,57 +200,60 @@ const tocItems = [
 This layer is designed to work alongside the [DCC-BS Nuxt Layers](https://github.com/DCC-BS/nuxt-layers) for authentication, backend communication, health checks, logging, and feedback. A typical dashboard `nuxt.config.ts` might look like this:
 
 ```ts
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 export default defineNuxtConfig({
   extends: [
-    ['github:StatA-BS/bs-dashboard-base', { install: true }],
+    join(__dirname, 'node_modules/bs-dashboard-base'),
     ['github:DCC-BS/nuxt-layers/auth', { install: true }],
     ['github:DCC-BS/nuxt-layers/health_check', { install: true }],
     ['github:DCC-BS/nuxt-layers/backend_communication', { install: true }],
     ['github:DCC-BS/nuxt-layers/logger', { install: true }],
-    ['github:DCC-BS/nuxt-layers/feedback-control', { install: true }],
   ],
 })
 ```
+
+This layer already ships `FeedbackControl` and `/api/feedback`. You usually do **not** also extend the DCC-BS `feedback-control` layer.
 
 For details on configuring the DCC-BS layers (environment variables, auth switching, etc.), see the [DCC-BS Nuxt Layers documentation](https://dcc-bs.github.io/documentation/nuxt-layers/).
 
 ### Environment Configuration
 
-Set the GitHub token for the feedback control integration as an environment variable:
+**Feedback** (server-only):
 
 ```sh
 FEEDBACK_GITHUB_TOKEN=ghp_xxxxxxxxxxxx
 ```
 
-Then configure your `nuxt.config.ts`:
+**Open Data API key:**
+
+- Server routes: `NUXT_BS_API_KEY` → `runtimeConfig.bsApiKey` (preferred)
+- Client / `useBsApi`: `NUXT_PUBLIC_BS_API_KEY` → `runtimeConfig.public.bsApiKey`
 
 ```ts
 export default defineNuxtConfig({
-  extends: [
-    ['github:StatA-BS/bs-dashboard-base', { install: true }],
-  ],
+  extends: [join(__dirname, 'node_modules/bs-dashboard-base')],
 
   runtimeConfig: {
+    bsApiKey: process.env.NUXT_BS_API_KEY || '',
     feedback: {
       repo: 'Feedback_your-project',
       repoOwner: 'YourGitHubOrg',
       project: 'your-project-name',
       githubToken: process.env.FEEDBACK_GITHUB_TOKEN || '',
+      label: 'feedback',
+    },
+    public: {
+      bsApiKey: process.env.NUXT_PUBLIC_BS_API_KEY || '',
     },
   },
 })
 ```
 
 For static GitHub Pages deployments, do not provide `FEEDBACK_GITHUB_TOKEN`. The playground is built as static client assets, and no GitHub token should be shipped to the browser.
-
-You can then access these values in your app with:
-
-```ts
-const config = useRuntimeConfig()
-console.log(config.feedback.githubToken)
-console.log(config.feedback.repo)
-// ...
-```
 
 See the [Nuxt runtimeConfig docs](https://nuxt.com/docs/guide/essentials/runtime-config) for more details.
 
@@ -210,7 +268,12 @@ bs-dashboard-base/
 │   ├── composables/      # Composables (auto-imported)
 │   ├── layouts/          # Nuxt layouts
 │   ├── plugins/          # Nuxt plugins
-│   └── assets/css/       # Tailwind + component CSS
+│   ├── assets/css/       # Tailwind + component CSS
+│   └── app.config.ts     # Default dashboard chrome config
+├── public/               # Shared static assets (e.g. github-mark.svg)
+├── server/
+│   ├── api/              # Feedback endpoint
+│   └── utils/            # ODS data portal helpers
 ├── .playground/          # Development playground app
 ├── nuxt.config.ts        # Layer configuration
 ├── postcss.config.js     # PostCSS configuration
