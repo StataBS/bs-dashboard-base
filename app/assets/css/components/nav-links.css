@@ -159,7 +159,7 @@
     flex-direction: column;
     gap: 3px;
     flex-shrink: 0;
-    width: 220px;
+    width: var(--grafiken-sidebar-width, 220px);
     position: sticky;
     align-self: start;
     z-index: 40;
@@ -182,7 +182,9 @@
   transition-duration: 0.25s;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 @media (min-width: 1580px) {
