@@ -9,6 +9,8 @@ const props = defineProps<{
   to?: string
   sparkline?: number[]
   sparklineColor?: string
+  sparklineLabelLeft?: string
+  sparklineLabelRight?: string
 }>()
 
 const tag = computed(() => {
@@ -46,6 +48,8 @@ const hasSparkline = computed(
       <Sparkline
         :values="sparkline!"
         :color="sparklineColor"
+        :label-left="sparklineLabelLeft"
+        :label-right="sparklineLabelRight"
       />
     </div>
   </component>

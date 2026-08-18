@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.1
+
+### Added
+
+- `KPICard` forwards `sparklineLabelLeft` / `sparklineLabelRight` to the sparkline.
+
+### Fixed
+
+- Sparkline y-scale uses the series min/max (no longer floors at 1 or always includes 0), so small ranges like µg/m³ traces stay readable.
+
 ## 0.2.0
 
 ### Added

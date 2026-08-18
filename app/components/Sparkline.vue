@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { max } from 'd3-array'
+import { max, min } from 'd3-array'
 import { scaleLinear } from 'd3-scale'
 import { select } from 'd3-selection'
 import { area, line } from 'd3-shape'
@@ -48,16 +48,19 @@ function draw() {
 
   if (values.length < 2) return
 
-  const yMax = Math.max(max(values) ?? 0, 1)
+  const yMinVal = min(values) ?? 0
+  const yMaxVal = max(values) ?? 0
+  const span = yMaxVal - yMinVal
+  const pad = span > 0 ? span * 0.12 : Math.max(Math.abs(yMaxVal), Number.EPSILON) * 0.08
   const xMax = Math.max(values.length - 1, 1)
   const x = scaleLinear().domain([0, xMax]).range([padX, w - padX])
   const y = scaleLinear()
-    .domain([-yMax * 0.08, yMax * 1.1])
+    .domain([yMinVal - pad, yMaxVal + pad])
     .range([chartBottom, padTop])
 
   const areaGen = area<number>()
     .x((_, i) => x(i))
-    .y0(y(0))
+    .y0(chartBottom)
     .y1(d => y(d))
 
   const lineGen = line<number>()
