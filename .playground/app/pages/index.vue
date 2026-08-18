@@ -38,12 +38,12 @@ const tableRows = [
       <h3 class="h3 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">KPICard</h3>
       <div class="my-20 lg:mb-30 xl:pr-220">
         <div class="ck-content hyphens-auto lg:hyphens-none">
-          <p>Die <strong>KPICard</strong>-Komponente zeigt eine Kennzahl mit Titel und optionaler Beschreibung an. Mit dem Parameter <code>href</code> wird die Karte klickbar und erhält beim Hover einen violetten Schatten.</p>
+          <p>Die <strong>KPICard</strong>-Komponente zeigt eine Kennzahl mit Titel und optionaler Beschreibung an. Mit dem Parameter <code>href</code> oder <code>to</code> wird die Karte klickbar und erhält beim Hover einen violetten Schatten. Optional zeigt <code>sparkline</code> einen Flächen-Trend unter der Kennzahl.</p>
         </div>
       </div>
       <div class="grid grid-cols-2 lg:grid-cols-3 gap-20">
-        <KPICard title="Antwort auf alles" description="Die ultimative Antwort auf die endgültige Frage nach dem Leben, dem Universum und dem ganzen Rest" value="42" to="/grafiken/42" />
-        <KPICard title="Einzige gerade Primzahl" description="Die einzige Zahl, die sowohl gerade als auch prim ist" value="2" to="/grafiken/primzahlen" />
+        <KPICard title="Antwort auf alles" description="Die ultimative Antwort auf die endgültige Frage nach dem Leben, dem Universum und dem ganzen Rest" value="42" to="/grafiken/42" :sparkline="[12, 18, 15, 22, 28, 24, 31, 35, 33, 40, 38, 42]" />
+        <KPICard title="Einzige gerade Primzahl" description="Die einzige Zahl, die sowohl gerade als auch prim ist" value="2" to="/grafiken/primzahlen" :sparkline="[5, 4, 3, 3, 2, 2]" sparkline-color="#1f77b4" />
         <KPICard title="Basis unseres Zahlensystems" description="Vermutlich weil wir 10 Finger haben" value="10" to="/grafiken/zahlensysteme" />
         <KPICard title="Kaffeepausen pro Tag" description="Empfohlene Anzahl Kaffeepausen für maximale Produktivität" value="3–5" to="/grafiken/kaffeepausen" />
         <KPICard title="Montags-Motivation" description="Anteil der Bevölkerung, die montags gerne aufsteht" value="3%" to="/grafiken/motivation" />

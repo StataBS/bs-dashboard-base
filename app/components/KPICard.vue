@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import Sparkline from './Sparkline.vue'
+
 const props = defineProps<{
   title: string
   description?: string
   value: string | number
   href?: string
   to?: string
+  sparkline?: number[]
+  sparklineColor?: string
 }>()
 
 const tag = computed(() => {
@@ -18,6 +22,10 @@ const linkAttrs = computed(() => {
   if (props.href) return { href: props.href, target: '_blank', rel: 'noopener noreferrer' }
   return {}
 })
+
+const hasSparkline = computed(
+  () => Array.isArray(props.sparkline) && props.sparkline.length >= 2,
+)
 </script>
 
 <template>
@@ -31,5 +39,14 @@ const linkAttrs = computed(() => {
       <p v-if="description" class="text-xs mt-5">{{ description }}</p>
     </div>
     <p class="kpi-card__value">{{ value }}</p>
+    <div
+      v-if="hasSparkline"
+      class="kpi-card__sparkline"
+    >
+      <Sparkline
+        :values="sparkline!"
+        :color="sparklineColor"
+      />
+    </div>
   </component>
 </template>

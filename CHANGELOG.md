@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0
+
+### Added
+
+- `Sparkline` component: compact D3 area + line chart (`values`, optional `color`, `height`, `labelLeft` / `labelRight`). Solid fill, no fade.
+- `KPICard` optional `sparkline` (`number[]`) and `sparklineColor` — renders a trend under the value when at least two points are provided.
+
 ## 0.1.0
 
 ### Breaking
