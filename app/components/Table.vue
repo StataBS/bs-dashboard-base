@@ -29,6 +29,8 @@ const props = withDefaults(defineProps<{
   getRowKey?: (row: any, index: number) => string | number
   filterOptions?: FilterOption[]
   defaultSort?: { key: string; dir: SortDir }
+  /** When set, rows with a return value are clickable and navigate to that route. */
+  getRowTo?: (row: Record<string, any>) => string | null | undefined
 }>(), {
   rows: () => [],
   mobile: true,
@@ -107,6 +109,20 @@ const displayRows = computed(() => {
   }
   return result
 })
+
+function rowTo(row: Record<string, any>): string | null {
+  return props.getRowTo?.(row) || null
+}
+
+function onRowActivate(row: Record<string, any>, event?: MouseEvent) {
+  const to = rowTo(row)
+  if (!to) return
+  if (event?.metaKey || event?.ctrlKey) {
+    window.open(to, '_blank')
+    return
+  }
+  navigateTo(to)
+}
 </script>
 
 <template>
@@ -189,6 +205,11 @@ const displayRows = computed(() => {
         <tr
           v-for="(row, idx) in displayRows"
           :key="getRowKey ? getRowKey(row, idx) : idx"
+          :class="{ 'table__row--clickable': Boolean(rowTo(row)) }"
+          :tabindex="rowTo(row) ? 0 : undefined"
+          :title="rowTo(row) ? 'Details anzeigen' : undefined"
+          @click="onRowActivate(row, $event)"
+          @keydown.enter.prevent="onRowActivate(row)"
         >
           <td
             v-for="col in columns"
@@ -268,5 +289,18 @@ const displayRows = computed(() => {
   flex-direction: column;
   font-size: 0.5rem;
   line-height: 0.65;
+}
+
+.table__row--clickable {
+  cursor: pointer;
+}
+
+.table__row--clickable:hover td {
+  background-color: rgba(50, 131, 74, 0.06);
+}
+
+.table__row--clickable:focus-visible {
+  outline: 2px solid #32834a;
+  outline-offset: -2px;
 }
 </style>

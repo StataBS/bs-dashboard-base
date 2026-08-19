@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+### Added
+
+- `Table` optional `getRowTo` — rows with a return value are clickable and navigate to that route (hover, keyboard, Ctrl/Cmd-click).
+
 ## 0.2.1
 
 ### Added

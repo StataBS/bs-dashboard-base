@@ -31,7 +31,7 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 | `NavBar` | Sticky navigation bar; items from `app.config` |
 | `NavLinks` | Sidebar / dropdown for sub-sections; sections from `app.config` |
 | `SiteFooter` | Footer with feedback control, links, and copyright |
-| `Table` | Data table with mobile stacking, scoped slots, optional sort/filter |
+| `Table` | Data table with mobile stacking, scoped slots, optional sort/filter, optional clickable rows (`getRowTo`) |
 | `TableOfContents` | Reusable table of contents with responsive columns and sticky mode |
 | `Tabs` | Tab component with v-model support |
 
