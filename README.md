@@ -1,6 +1,6 @@
 # bs-dashboard-base
 
-> **Repository**: [github.com/StatA-BS/bs-dashboard-base](https://github.com/StatA-BS/bs-dashboard-base)
+> **Repository**: [github.com/StatABS/bs-dashboard-base](https://github.com/StatABS/bs-dashboard-base)
 
 A [Nuxt Layer](https://nuxt.com/docs/guide/going-further/layers) providing reusable dashboard components, layouts, and styling for Kanton Basel-Stadt, built on top of the official [Digital Design System](https://github.com/kanton-basel-stadt/designsystem).
 
