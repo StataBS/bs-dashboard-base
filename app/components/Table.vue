@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import Dropdown from './Dropdown.vue'
 
 type Column = {
   key: string
@@ -136,28 +137,13 @@ function onRowActivate(row: Record<string, any>, event?: MouseEvent) {
         :key="f.key"
         class="filter-field"
       >
-        <label
-          :for="`table-filter-${f.key}`"
-          class="label"
-        >
-          {{ f.label }}
-        </label>
-        <select
+        <Dropdown
           :id="`table-filter-${f.key}`"
           v-model="filters[f.key]"
-          class="input"
-        >
-          <option value="">
-            Alle
-          </option>
-          <option
-            v-for="opt in f.options"
-            :key="opt"
-            :value="opt"
-          >
-            {{ opt }}
-          </option>
-        </select>
+          :label="f.label"
+          placeholder="Alle"
+          :options="f.options"
+        />
       </div>
     </div>
 
@@ -261,7 +247,7 @@ function onRowActivate(row: Record<string, any>, event?: MouseEvent) {
   flex-direction: column;
 }
 
-.filter-field .input {
+.filter-field .dropdown {
   width: 100%;
 }
 

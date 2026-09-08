@@ -24,6 +24,7 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 | `BSLogo` | Basel-Stadt logo with Baselstab icon |
 | `Contact` | Contact card with name, phone, and email |
 | `DatePicker` | Date picker with v-calendar, DD.MM.YYYY format, and event indicators |
+| `Dropdown` | DDS form dropdown: caret inset from the border, 180° spin when open, optional close icon |
 | `FeedbackControl` | Feedback form that posts to `/api/feedback` (GitHub Issues) |
 | `IconDownload` | Animated SVG download icon |
 | `KPICard` | Key performance indicator card with title, description, and value |
@@ -105,7 +106,7 @@ Pin a release tag in `package.json` (recommended):
 ```json
 {
   "dependencies": {
-    "bs-dashboard-base": "github:StataBS/bs-dashboard-base#v0.1.0"
+    "bs-dashboard-base": "github:StataBS/bs-dashboard-base#v0.2.2"
   }
 }
 ```
@@ -146,6 +147,24 @@ All components, layouts, composables, and plugins are available immediately -- n
 The `default` layout (with `AppHeader`, `NavBar`, and `SiteFooter`) is applied automatically.
 
 ### Component Examples
+
+#### `Dropdown`
+
+```vue
+<script setup lang="ts">
+const department = ref('')
+const options = ['Präsidialdepartement', 'Bau- und Verkehrsdepartement']
+</script>
+
+<template>
+  <Dropdown
+    v-model="department"
+    label="Departement"
+    placeholder="Alle Departemente"
+    :options="options"
+  />
+</template>
+```
 
 #### `Table` mobile behavior controls
 

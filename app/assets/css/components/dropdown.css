@@ -1,0 +1,90 @@
+@layer components {
+  /* Unlabelled variant: DDS positions the inner below a .label (top: 27px). */
+  .dropdown .dropdown-wrapper--unlabelled {
+    min-height: 0;
+  }
+
+  .dropdown .dropdown-wrapper--unlabelled .dropdown-inner {
+    position: relative;
+    top: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  /*
+   * Storybook/FormKit: the list is in-flow (`!static`), so the bordered
+   * inner grows around trigger + options instead of a separate popover.
+   */
+  .dropdown .dropdown-listbox {
+    position: static;
+    max-height: 400px;
+    overflow: auto;
+    width: 100%;
+  }
+
+  /* Hide the DDS ::after caret; we render caret + close as flex items. */
+  .dropdown .dropdown-wrapper .dropdown-inner .dropdown-trigger::after {
+    display: none;
+    width: 0;
+    height: 0;
+    content: none;
+  }
+
+  .dropdown-trigger > .dropdown-option {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .dropdown-icons {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dropdown-clear,
+  .dropdown-caret {
+    display: flex;
+    height: 20px;
+    width: 20px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    color: rgb(30 69 87);
+  }
+
+  .dropdown-clear {
+    cursor: pointer;
+    transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dropdown-clear:hover {
+    color: rgb(7 155 202);
+  }
+
+  .dropdown-caret svg {
+    display: block;
+    height: 10px;
+    width: 10px;
+  }
+
+  .dropdown-clear svg {
+    display: block;
+    height: 20px;
+    width: 20px;
+  }
+
+  .dropdown-caret {
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dropdown-caret--open {
+    transform: rotate(180deg);
+  }
+
+  .dropdown[data-expanded='true'] .dropdown-inner {
+    z-index: 999;
+  }
+}

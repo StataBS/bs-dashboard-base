@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.3
+
+### Added
+
+- `Dropdown` — Vue implementation of the DDS form dropdown (caret inset + 180° spin when open, listbox overlay, optional close icon to clear).
+- `Table` filters use `Dropdown` instead of a native `<select>`.
+
 ## 0.2.2
 
 ### Added

@@ -23,6 +23,7 @@
 @import './components/link-item.css';
 @import './components/navbar.css';
 @import './components/nav-links.css';
+@import './components/dropdown.css';
 @import './components/tabs.css';
 
 @layer utilities {

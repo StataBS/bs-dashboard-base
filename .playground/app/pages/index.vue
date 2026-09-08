@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const selectedVariant = ref('info (Standard)')
+
 const tableColumns = [
   { key: 'variante', label: 'Variante' },
   { key: 'beschreibung', label: 'Beschreibung' },
@@ -124,6 +126,23 @@ const tableRows = [
           class="clear-both mt-15 w-full text-balance"
         />
       </Box>
+    </div>
+
+    <div>
+      <h3 class="h3 mb-20 lg:mb-30 mt-10 md:mt-40 xl:mt-50 scroll-mt-10 xl:pr-140">Dropdown</h3>
+      <div class="my-20 lg:mb-30 xl:pr-220">
+        <div class="ck-content hyphens-auto lg:hyphens-none">
+          <p>Die <strong>Dropdown</strong>-Komponente folgt dem Markup des Designsystem-Dropdowns: Caret mit Innenabstand, 180°-Drehung im offenen Zustand, Close-Icon zum Zurücksetzen.</p>
+        </div>
+      </div>
+      <div class="max-w-md">
+        <Dropdown
+          v-model="selectedVariant"
+          label="Box-Variante"
+          placeholder="Alle Varianten"
+          :options="tableRows.map(row => row.variante)"
+        />
+      </div>
     </div>
 
     <div>
