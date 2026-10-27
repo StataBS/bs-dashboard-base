@@ -27,7 +27,8 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          # CVE-2026-111497: Bun >= 1.4.4
+          bun-version: 1.4.4
 
       - name: Install dependencies
         run: bun install
