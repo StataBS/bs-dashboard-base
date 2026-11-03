@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Breaking
+
+- `useBsApi` no longer calls the live data.bs.ch portal. It only loads local `/data/{odsId}.json`. Use a Nitro route with `NUXT_BS_API_KEY` + `fetchDatasetJson` / `resolveBsApiKey` for live data.
+- `resolveBsApiKey` no longer falls back to `runtimeConfig.public.bsApiKey`. Keep portal keys server-only (never `NUXT_PUBLIC_*`).
+
 ## 0.2.3
 
 ### Added

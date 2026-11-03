@@ -42,8 +42,8 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 
 ### Composables / server utils
 
-- **`useBsApi`** -- Client/SSR composable: tries `/data/{odsId}.json`, then live ODS with Apikey.
-- **`fetchDatasetJson` / `resolveBsApiKey`** -- Nitro server utils for ODS JSON export (`server/utils/bsDataPortal.ts`).
+- **`useBsApi`** -- Client/SSR composable for local `/data/{odsId}.json` only.
+- **`fetchDatasetJson` / `resolveBsApiKey`** -- Nitro server utils for live ODS JSON export (`server/utils/bsDataPortal.ts`). Use these from server routes with `NUXT_BS_API_KEY`.
 
 ### Chrome configuration (`app.config`)
 
@@ -247,10 +247,11 @@ For details on configuring the DCC-BS layers (environment variables, auth switch
 FEEDBACK_GITHUB_TOKEN=ghp_xxxxxxxxxxxx
 ```
 
-**Open Data API key:**
+**Open Data API key (server-only):**
 
-- Server routes: `NUXT_BS_API_KEY` → `runtimeConfig.bsApiKey` (preferred)
-- Client / `useBsApi`: `NUXT_PUBLIC_BS_API_KEY` → `runtimeConfig.public.bsApiKey`
+- `NUXT_BS_API_KEY` → `runtimeConfig.bsApiKey`
+- Call the portal from Nitro routes via `resolveBsApiKey` / `fetchDatasetJson`
+- Do **not** put the key under `runtimeConfig.public` or use `NUXT_PUBLIC_*`
 
 ```ts
 export default defineNuxtConfig({
@@ -264,9 +265,6 @@ export default defineNuxtConfig({
       project: 'your-project-name',
       githubToken: process.env.FEEDBACK_GITHUB_TOKEN || '',
       label: 'feedback',
-    },
-    public: {
-      bsApiKey: process.env.NUXT_PUBLIC_BS_API_KEY || '',
     },
   },
 })
