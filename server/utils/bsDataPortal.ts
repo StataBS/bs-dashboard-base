@@ -1,17 +1,13 @@
 const BASE_URL = 'https://data.bs.ch/api/explore/v2.1/catalog/datasets'
 
 /**
- * Fetches an ODS dataset JSON export from the Basel-Stadt data portal.
- * Prefers a private `runtimeConfig.bsApiKey`, falls back to `public.bsApiKey`.
+ * Reads the server-only portal API key from `runtimeConfig.bsApiKey`
+ * (`NUXT_BS_API_KEY`). Do not expose this via `runtimeConfig.public`.
  */
 export function resolveBsApiKey(config?: {
   bsApiKey?: string
-  public?: { bsApiKey?: string }
 }): string {
-  const privateKey = String(config?.bsApiKey || '').trim()
-  if (privateKey)
-    return privateKey
-  return String(config?.public?.bsApiKey || '').trim()
+  return String(config?.bsApiKey || '').trim()
 }
 
 export async function fetchDatasetJson(odsId: string, apiKey: string): Promise<unknown[]> {
