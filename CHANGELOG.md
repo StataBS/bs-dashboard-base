@@ -6,6 +6,11 @@
 
 - `OnThisPage` — bs.ch-style "Auf dieser Seite" anchor list with a bottom-sticky bar until the list is reached.
 
+### Fixed
+
+- `Table` scrolls horizontally inside its own container instead of widening the page.
+- Default layout clips horizontal overflow (`overflow-x: clip`), so full-bleed bands no longer cause a horizontal scrollbar when the browser shows classic scrollbars.
+
 ### Breaking
 
 - `useBsApi` no longer calls the live data.bs.ch portal. It only loads local `/data/{odsId}.json`. Use a Nitro route with `NUXT_BS_API_KEY` + `fetchDatasetJson` / `resolveBsApiKey` for live data.

@@ -28,7 +28,7 @@ withDefaults(defineProps<{
   >
     <a
       :href="`#${id}`"
-      class="on-this-page__bar-link pre-heading container"
+      class="on-this-page__bar-link pre-heading"
     >
       {{ title }}
     </a>
@@ -39,10 +39,7 @@ withDefaults(defineProps<{
     v-bind="$attrs"
     class="on-this-page"
   >
-    <nav
-      class="container"
-      :aria-label="title"
-    >
+    <nav :aria-label="title">
       <ul class="on-this-page__list">
         <li
           v-for="item in items"

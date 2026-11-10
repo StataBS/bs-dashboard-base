@@ -147,94 +147,100 @@ function onRowActivate(row: Record<string, any>, event?: MouseEvent) {
       </div>
     </div>
 
-    <table
-      :class="[
-        'table',
-        { 'has-mobile-style': mobile },
-        tableClass,
-      ]"
-    >
-      <caption v-if="caption">{{ caption }}</caption>
+    <div class="table-scroll">
+      <table
+        :class="[
+          'table',
+          { 'has-mobile-style': mobile },
+          tableClass,
+        ]"
+      >
+        <caption v-if="caption">{{ caption }}</caption>
 
-      <thead>
-        <tr>
-          <th
-            v-for="col in columns"
-            :key="col.key"
-            :class="[
-              'table__col',
-              `table__col--${col.key}`,
-              col.hidden ? 'table__col--hidden' : '',
-              col.thClass,
-            ]"
-          >
-            <button
-              v-if="isSortable(col)"
-              type="button"
-              class="sort-header"
-              @click="toggleSort(col)"
+        <thead>
+          <tr>
+            <th
+              v-for="col in columns"
+              :key="col.key"
+              :class="[
+                'table__col',
+                `table__col--${col.key}`,
+                col.hidden ? 'table__col--hidden' : '',
+                col.thClass,
+              ]"
             >
-              <span>{{ col.label }}</span>
-              <span class="sort-icons" aria-hidden="true">
-                <span :class="sortIconClass(col, 'asc')">▲</span>
-                <span :class="sortIconClass(col, 'desc')">▼</span>
-              </span>
-            </button>
-            <template v-else>
-              {{ col.label }}
-            </template>
-          </th>
-        </tr>
-      </thead>
+              <button
+                v-if="isSortable(col)"
+                type="button"
+                class="sort-header"
+                @click="toggleSort(col)"
+              >
+                <span>{{ col.label }}</span>
+                <span class="sort-icons" aria-hidden="true">
+                  <span :class="sortIconClass(col, 'asc')">▲</span>
+                  <span :class="sortIconClass(col, 'desc')">▼</span>
+                </span>
+              </button>
+              <template v-else>
+                {{ col.label }}
+              </template>
+            </th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr
-          v-for="(row, idx) in displayRows"
-          :key="getRowKey ? getRowKey(row, idx) : idx"
-          :class="{ 'table__row--clickable': Boolean(rowTo(row)) }"
-          :tabindex="rowTo(row) ? 0 : undefined"
-          :title="rowTo(row) ? 'Details anzeigen' : undefined"
-          @click="onRowActivate(row, $event)"
-          @keydown.enter.prevent="onRowActivate(row)"
-        >
-          <td
-            v-for="col in columns"
-            :key="col.key"
-            :data-head-label="col.label"
-            :class="[
-              'table__col',
-              `table__col--${col.key}`,
-              col.hidden ? 'table__col--hidden' : '',
-              col.tdClass,
-            ]"
+        <tbody>
+          <tr
+            v-for="(row, idx) in displayRows"
+            :key="getRowKey ? getRowKey(row, idx) : idx"
+            :class="{ 'table__row--clickable': Boolean(rowTo(row)) }"
+            :tabindex="rowTo(row) ? 0 : undefined"
+            :title="rowTo(row) ? 'Details anzeigen' : undefined"
+            @click="onRowActivate(row, $event)"
+            @keydown.enter.prevent="onRowActivate(row)"
           >
-            <slot
-              :name="`cell-${col.key}`"
-              :row="row"
-              :value="row[col.key]"
-              :col="col"
+            <td
+              v-for="col in columns"
+              :key="col.key"
+              :data-head-label="col.label"
+              :class="[
+                'table__col',
+                `table__col--${col.key}`,
+                col.hidden ? 'table__col--hidden' : '',
+                col.tdClass,
+              ]"
             >
-              {{ row[col.key] ?? '–' }}
-            </slot>
-          </td>
-        </tr>
+              <slot
+                :name="`cell-${col.key}`"
+                :row="row"
+                :value="row[col.key]"
+                :col="col"
+              >
+                {{ row[col.key] ?? '–' }}
+              </slot>
+            </td>
+          </tr>
 
-        <tr v-if="!displayRows.length">
-          <td
-            v-for="col in columns"
-            :key="col.key"
-            :data-head-label="col.label"
-            :class="['table__col', `table__col--${col.key}`, col.tdClass]"
-          >
-            –
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          <tr v-if="!displayRows.length">
+            <td
+              v-for="col in columns"
+              :key="col.key"
+              :data-head-label="col.label"
+              :class="['table__col', `table__col--${col.key}`, col.tdClass]"
+            >
+              –
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.table-scroll {
+  overflow-x: auto;
+}
+
 .filter-grid {
   display: grid;
   gap: 16px;
