@@ -1,0 +1,35 @@
+@layer components {
+  .on-this-page__bar,
+  .on-this-page {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    @apply bg-primary-100;
+  }
+
+  .on-this-page__bar {
+    @apply border-t-2 border-primary-600;
+  }
+
+  .on-this-page__bar--sticky {
+    @apply sticky bottom-0 z-40;
+  }
+
+  .on-this-page__bar-link {
+    @apply block py-20 lg:py-25 text-primary-700 no-underline;
+  }
+
+  .on-this-page {
+    margin-top: -1px !important;
+    /* Height of the bar above, so jumping to the list keeps the "Auf dieser Seite" label in view. */
+    @apply pb-20 lg:pb-30 scroll-mt-[62px] lg:scroll-mt-[72px];
+  }
+
+  .on-this-page__list {
+    @apply grid grid-cols-1 md:grid-cols-3 auto-rows-auto gap-10 md:gap-20 list-none p-0 m-0;
+  }
+
+  .on-this-page__link {
+    @apply text-lg xl:text-xl text-balance no-underline;
+  }
+}

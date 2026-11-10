@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Added
+
+- `OnThisPage` — bs.ch-style "Auf dieser Seite" anchor list with a bottom-sticky bar until the list is reached.
+
 ### Breaking
 
 - `useBsApi` no longer calls the live data.bs.ch portal. It only loads local `/data/{odsId}.json`. Use a Nitro route with `NUXT_BS_API_KEY` + `fetchDatasetJson` / `resolveBsApiKey` for live data.

@@ -1,3 +1,8 @@
+/* The design system reserves room for bs.ch's fixed header. The dashboard navbar hides on anchor jumps instead. */
+html {
+  scroll-padding-top: 0;
+}
+
 .sticky-navbar {
   position: sticky;
   top: 0;

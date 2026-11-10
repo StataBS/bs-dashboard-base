@@ -33,6 +33,7 @@ For more background, see the [Nuxt Layers documentation](https://nuxt.com/docs/g
 | `NavLinks` | Sidebar / dropdown for sub-sections; sections from `app.config` |
 | `SiteFooter` | Footer with feedback control, links, and copyright |
 | `Table` | Data table with mobile stacking, scoped slots, optional sort/filter, optional clickable rows (`getRowTo`) |
+| `OnThisPage` | bs.ch-style "Auf dieser Seite" anchor list, placed after the lead |
 | `TableOfContents` | Reusable table of contents with responsive columns and sticky mode |
 | `Tabs` | Tab component with v-model support |
 
@@ -191,6 +192,30 @@ const rows = [
 `Table` props for mobile configuration:
 
 - `mobile` (`boolean`, default `true`)
+
+#### `OnThisPage`
+
+Anchor list like on [bs.ch](https://www.bs.ch/pd/abteilung-kultur-basel-stadt): a full-width "Auf dieser Seite" band directly after the lead. While the list is below the fold, the "Auf dieser Seite" bar sticks to the bottom of the viewport and jumps to the list.
+
+```vue
+<script setup lang="ts">
+const tocItems = [
+  { label: 'Über uns', id: 'ueber-uns' },
+  { label: 'Aktuelles', id: 'aktuelles' },
+]
+</script>
+
+<template>
+  <h1 class="header-title">Seitentitel</h1>
+  <p class="lead">…</p>
+  <OnThisPage :items="tocItems" />
+  <section id="ueber-uns">…</section>
+</template>
+```
+
+Props: `items` (`{ label, id }[]`, `id` without `#`), `title` (default `'Auf dieser Seite'`), `id` (default `'table-of-contents'`), `sticky` (default `true`).
+
+The component renders two sibling root elements, so place it directly in the page's content wrapper (not inside an extra `<div>`), otherwise the sticky bar cannot pin to the viewport bottom.
 
 #### `TableOfContents`
 
