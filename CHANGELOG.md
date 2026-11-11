@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.4
 
 ### Added
 
@@ -8,6 +8,7 @@
 
 ### Fixed
 
+- Page header no longer keeps an empty second row below the `lg` breakpoint. Dashboards only use the logo and the about link, so the row reserved for the bs.ch navigation was blank space.
 - `Table` scrolls horizontally inside its own container instead of widening the page.
 - Default layout clips horizontal overflow (`overflow-x: clip`), so full-bleed bands no longer cause a horizontal scrollbar when the browser shows classic scrollbars.
 

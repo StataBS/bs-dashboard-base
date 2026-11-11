@@ -107,7 +107,7 @@ Pin a release tag in `package.json` (recommended):
 ```json
 {
   "dependencies": {
-    "bs-dashboard-base": "github:StataBS/bs-dashboard-base#v0.2.2"
+    "bs-dashboard-base": "github:StataBS/bs-dashboard-base#v0.2.4"
   }
 }
 ```
